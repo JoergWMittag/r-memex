@@ -56,7 +56,7 @@ class NodeContainer
 
   def relative_frequencies
     freq = absolute_frequencies
-    freq.each {|key, value| freq[key]=value/@nodes.size}
+    freq.each {|key, value| freq[key] = value.to_f / @nodes.size}
   end
 
 end
