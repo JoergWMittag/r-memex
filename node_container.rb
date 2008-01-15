@@ -30,31 +30,27 @@ class NodeContainer
 
   def list_tags
     tags = Set.new
-    @nodes.collect {|item| tags.merge(item.tags)}
+    @nodes.collect { |item| tags.merge(item.tags) }
     return tags
   end
 
   def absolute_frequency(tag)
     freq = 0
-    @nodes.collect do |node|
-       freq += 1 if node.has_tag?(tag)
-     end
+    @nodes.collect { |node| freq += 1 if node.has_tag?(tag) }
     return freq
   end
 
   def absolute_frequencies
     freq = Hash.new(0)
     @nodes.collect do |node|
-      node.tags.each do |tag|
-        freq[tag] += 1
-      end
+      node.tags.each { |tag| freq[tag] += 1 }
     end
     return freq
   end
 
   def relative_frequencies
     freq = absolute_frequencies
-    freq.each {|key, value| freq[key] = value.to_f / @nodes.size}
+    freq.each { |key, value| freq[key] = value.to_f / @nodes.size }
   end
 
 end
