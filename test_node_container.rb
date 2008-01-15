@@ -86,6 +86,25 @@ class TestNodeContainer < Test::Unit::TestCase
     assert_equal(Set.new([rel2]), nc.relations)
   end
 
+  def test_get_nodes
+    nc = NodeContainer.new
+    node1 = Node.new("a")
+    node2 = Node.new("b")
+    node3 = Node.new("c")
+    node4 = Node.new("d")
+    nc.add_node(node1)
+    nc.add_node(node2)
+    nc.add_node(node3)
+    nc.add_node(node4)
+    node1.add_tag("tag_a")
+    node2.add_tag("tag_b")
+    node3.add_tag("tag_c")
+    node4.add_tag("tag_d")
+    node4.add_tag("tag_a")
+    assert_equal(Set.new([node2]), nc.get_nodes("tag_b"))
+    assert_equal(Set.new([node1, node4]), nc.get_nodes("tag_a"))
+  end
+
   private
 
   def init_tags

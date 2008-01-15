@@ -53,4 +53,8 @@ class NodeContainer
     freq.each { |key, value| freq[key] = value.to_f / @nodes.size }
   end
 
+  def get_nodes(tag)
+    return Set.new(@nodes.select {|node| node.has_tag?(tag)})
+  end
+
 end
