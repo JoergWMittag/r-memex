@@ -46,7 +46,7 @@ class TestNodeContainer < Test::Unit::TestCase
     assert_equal(tf, nc.absolute_frequencies)
   end
 
-  def test_relative_frequenceis
+  def test_relative_frequencies
     nc = init_tags
     tf = Hash.new
     tf["Tag1"] = 2/2

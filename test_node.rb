@@ -3,7 +3,7 @@ require "set"
 
 require "node"
 
-class TestTestNode < Test::Unit::TestCase
+class TestNode < Test::Unit::TestCase
   def test_initialisation
     assert_not_nil(Node.new("NodeName"))
   end
