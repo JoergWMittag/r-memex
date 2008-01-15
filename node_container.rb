@@ -30,7 +30,7 @@ class NodeContainer
   
   def list_tags
     tags = Set.new
-    nodes.collect {|item| tags.merge(item.tags)}
+    @nodes.collect {|item| tags.merge(item.tags)}
     return tags
   end
   
