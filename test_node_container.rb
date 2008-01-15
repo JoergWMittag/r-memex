@@ -8,14 +8,14 @@ class TestNodeContainer < Test::Unit::TestCase
   def test_initialisation
       assert_not_nil(NodeContainer.new)
   end
-  
+
   def test_add_node
     nc = NodeContainer.new
     node = Node.new("a")
     nc.add_node(node)
     assert_equal(Set.new([node]), nc.nodes)
   end
-  
+
   def test_remove_node
     nc = NodeContainer.new
     node = Node.new("a")
@@ -23,7 +23,7 @@ class TestNodeContainer < Test::Unit::TestCase
     nc.remove_node(node)
     assert_equal(Set.new([]), nc.nodes)
   end
-  
+
   def init_tags
     node1 = Node.new("Node1")
     node2 = Node.new("Node2")
@@ -36,20 +36,20 @@ class TestNodeContainer < Test::Unit::TestCase
     nc.add_node(node2)
     return nc
   end
-  
+
   def test_list_tags
     nc = init_tags
     tagset = Set.new(["Tag1", "Tag2", "Tag3"])
     assert_equal(tagset, nc.list_tags)
   end
-  
+
   def test_frequency_single
     nc = init_tags
     assert_equal(nc.absolute_frequency("Tag1"), 2)
     assert_equal(nc.absolute_frequency("Tag2"), 1)
     assert_not_equal(1, nc.absolute_frequency("Tag4"))
   end
-  
+
   def test_frequencies
     nc = init_tags
     tf = Hash.new
@@ -58,7 +58,7 @@ class TestNodeContainer < Test::Unit::TestCase
     tf["Tag3"] = 1
     assert_equal(tf, nc.absolute_frequencies)
   end
-  
+
   def test_relative_frequenceis
     nc = init_tags
     tf = Hash.new
@@ -67,7 +67,7 @@ class TestNodeContainer < Test::Unit::TestCase
     tf["Tag3"] = 1/2
     assert_equal(tf, nc.relative_frequencies)    
   end
-  
+
   def test_add_relation
     nc = NodeContainer.new
     node1 = Node.new("a")
@@ -83,7 +83,6 @@ class TestNodeContainer < Test::Unit::TestCase
     assert_equal(Set.new([rel1]), nc.relations)
   end
 
-  
   def test_remove_relation
     nc = NodeContainer.new
     node1 = Node.new("a")
@@ -99,7 +98,5 @@ class TestNodeContainer < Test::Unit::TestCase
     nc.remove_relation(rel1)
     assert_equal(Set.new([rel2]), nc.relations)
   end
-      
-  
-  
+
 end
