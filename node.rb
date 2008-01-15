@@ -6,7 +6,7 @@ class Node
 
   def initialize(name)
     @name = name
-    @tags = Set.new 
+    @tags = Set.new
     #@relations = Array.new
   end
 

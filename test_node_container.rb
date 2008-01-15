@@ -52,7 +52,7 @@ class TestNodeContainer < Test::Unit::TestCase
     tf["Tag1"] = 2/2
     tf["Tag2"] = 1/2
     tf["Tag3"] = 1/2
-    assert_equal(tf, nc.relative_frequencies)    
+    assert_equal(tf, nc.relative_frequencies)
   end
 
   def test_add_relation
@@ -87,7 +87,7 @@ class TestNodeContainer < Test::Unit::TestCase
   end
 
   private
-  
+
   def init_tags
     node1 = Node.new("Node1")
     node2 = Node.new("Node2")

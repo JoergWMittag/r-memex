@@ -10,7 +10,7 @@ class TestTestNode < Test::Unit::TestCase
 
   def test_add_tag
     node = Node.new("NodeName")
-    node.add_tag("Tag_Name") 
+    node.add_tag("Tag_Name")
     node.add_tag("Tag_Name") #it is a set?
     assert_equal(1, node.tags.length)
     assert_equal(Set.new(["Tag_Name"]), node.tags)
