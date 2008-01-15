@@ -12,7 +12,7 @@ class NodeContainer
 
   def add_relation(rel)
     if (@nodes.include?(rel.orig) && @nodes.include?(rel.dest))
-      @relations.add(rel)
+      @relations << rel
     end
   end
 
@@ -21,7 +21,7 @@ class NodeContainer
   end
 
   def add_node(node)
-    @nodes.add(node)
+    @nodes << node
   end
 
   def remove_node(node)

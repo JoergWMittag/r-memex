@@ -11,7 +11,7 @@ class Node
   end
 
   def add_tag(tag)
-    @tags.add(tag)
+    @tags << tag
   end
 
   def remove_tag(tag)
