@@ -37,9 +37,7 @@ class NodeContainer
   def absolute_frequency(tag)
     freq = 0
     @nodes.collect do |node|
-       if node.has_tag?(tag)
-         freq += 1
-       end
+       freq += 1 if node.has_tag?(tag)
      end
     return freq
   end
