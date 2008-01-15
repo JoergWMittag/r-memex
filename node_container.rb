@@ -48,7 +48,7 @@ class NodeContainer
     freq = Hash.new(0)
     @nodes.collect do |node|
       node.tags.each do |tag|
-        freq[tag] = freq[tag]+1
+        freq[tag] += 1
       end
     end
     return freq
