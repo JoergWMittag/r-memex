@@ -24,19 +24,6 @@ class TestNodeContainer < Test::Unit::TestCase
     assert_equal(Set.new([]), nc.nodes)
   end
 
-  def init_tags
-    node1 = Node.new("Node1")
-    node2 = Node.new("Node2")
-    node1.add_tag("Tag1")
-    node2.add_tag("Tag3")
-    node2.add_tag("Tag1")
-    node2.add_tag("Tag2")
-    nc = NodeContainer.new
-    nc.add_node(node1)
-    nc.add_node(node2)
-    return nc
-  end
-
   def test_list_tags
     nc = init_tags
     tagset = Set.new(["Tag1", "Tag2", "Tag3"])
@@ -97,6 +84,21 @@ class TestNodeContainer < Test::Unit::TestCase
     nc.add_relation(rel2)
     nc.remove_relation(rel1)
     assert_equal(Set.new([rel2]), nc.relations)
+  end
+
+  private
+  
+  def init_tags
+    node1 = Node.new("Node1")
+    node2 = Node.new("Node2")
+    node1.add_tag("Tag1")
+    node2.add_tag("Tag3")
+    node2.add_tag("Tag1")
+    node2.add_tag("Tag2")
+    nc = NodeContainer.new
+    nc.add_node(node1)
+    nc.add_node(node2)
+    return nc
   end
 
 end
