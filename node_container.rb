@@ -5,7 +5,7 @@ require "node"
 class NodeContainer
   attr_reader :nodes, :relations
   
-  def initialize()
+  def initialize
     @nodes = Set.new
     @relations = Set.new
   end
@@ -36,9 +36,9 @@ class NodeContainer
   
   def absolute_frequency(tag)
     freq = 0
-    @nodes.collect() do |node|
+    @nodes.collect do |node|
        if node.has_tag?(tag)
-         freq = freq+1
+         freq += 1
        end
      end
     return freq
