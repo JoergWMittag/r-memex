@@ -1,5 +1,6 @@
 require "test/unit"
 require "set"
+require "uri"
 
 require "node"
 
@@ -30,5 +31,12 @@ class TestNode < Test::Unit::TestCase
     node.add_tag("Tag_Name_1")
     assert_equal(true, node.has_tag?("Tag_Name_1"))
     assert_equal(false, node.has_tag?("Tag_Name_2"))
+  end
+  
+  def test_set_uri
+    node = Node.new("NodeName")
+    node.set_uri("http://www.ruby.org")
+    assert_equal(URI.parse("http://www.ruby.org"), node.location)
+    assert_raise(URI::InvalidURIError) { node.set_uri("mal formed") }
   end
 end

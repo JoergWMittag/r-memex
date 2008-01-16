@@ -1,8 +1,9 @@
 require "set"
+require "uri"
 
 class Node
 
-  attr_reader :name, :tags
+  attr_reader :name, :tags, :location
 
   def initialize(name)
     @name = name
@@ -20,6 +21,10 @@ class Node
 
   def has_tag?(tag)
     return tags.include?(tag)
+  end
+  
+  def set_uri(uri_string)
+    @location = URI.parse(uri_string)
   end
 
 end
