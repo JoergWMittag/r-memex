@@ -3,6 +3,7 @@ require "set"
 require "uri"
 
 require "node"
+require "relation"
 
 class TestNode < Test::Unit::TestCase
   def test_initialisation
@@ -46,4 +47,19 @@ class TestNode < Test::Unit::TestCase
     assert_equal("Description and more", node.description)
     assert_not_equal("Unexpected", node.description)
   end
+  
+  def test_add_incoming_relation
+    node = Node.new("Node1")
+    rel = nil
+    node.add_incoming_relation(rel)
+    assert_equal(Set.new([rel]), node.incoming_relations)
+  end
+  
+  def test_add_outgoing_relation
+    node = Node.new("Node1")
+    rel = nil
+    node.add_outgoing_relation(rel)
+    assert_equal(Set.new([rel]), node.outgoing_relations)
+  end
+
 end
