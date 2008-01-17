@@ -18,10 +18,16 @@ class TestNodeContainer < Test::Unit::TestCase
 
   def test_remove_node
     nc = NodeContainer.new
-    node = Node.new("a")
-    nc.add_node(node)
-    nc.remove_node(node)
-    assert_equal(Set.new([]), nc.nodes)
+    node1 = Node.new("a")
+    node2 = Node.new("b")
+    nc.add_node(node1)
+    nc.add_node(node2)
+    rel = Relation.new(node1, node2, "relation")
+    nc.add_relation(rel)
+    assert_equal(Set.new([rel]), nc.relations)
+    nc.remove_node(node1)
+    assert_equal(Set.new([node2]), nc.nodes)
+    assert_equal(Set.new([]), nc.relations)
   end
 
   def test_list_tags
