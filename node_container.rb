@@ -11,7 +11,9 @@ class NodeContainer
   end
 
   def add_relation(rel)
-    if (@nodes.include?(rel.orig) && @nodes.include?(rel.dest))
+    if (@nodes.include?(rel.source) && @nodes.include?(rel.dest))
+      rel.source.add_outgoing_relation(rel)
+      rel.dest.add_incoming_relation(rel)
       @relations << rel
     end
   end
@@ -26,6 +28,7 @@ class NodeContainer
 
   def remove_node(node)
     @nodes.delete(node)
+    node.get_all_relations.each { |rel| remove_relation(rel) }
   end
 
   def list_tags
