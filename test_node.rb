@@ -39,4 +39,11 @@ class TestNode < Test::Unit::TestCase
     assert_equal(URI.parse("http://www.ruby.org"), node.location)
     assert_raise(URI::InvalidURIError) { node.set_uri("mal formed") }
   end
+  
+  def test_set_description
+    node = Node.new("NodeName")
+    node.set_description("Description and more")
+    assert_equal("Description and more", node.description)
+    assert_not_equal("Unexpected", node.description)
+  end
 end

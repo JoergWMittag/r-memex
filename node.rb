@@ -3,7 +3,7 @@ require "uri"
 
 class Node
 
-  attr_reader :name, :tags, :location
+  attr_reader :name, :tags, :location, :description
 
   def initialize(name)
     @name = name
@@ -25,6 +25,10 @@ class Node
   
   def set_uri(uri_string)
     @location = URI.parse(uri_string)
+  end
+  
+  def set_description(desc)
+    @description = desc.to_s
   end
 
 end
