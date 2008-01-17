@@ -61,5 +61,14 @@ class TestNode < Test::Unit::TestCase
     node.add_outgoing_relation(rel)
     assert_equal(Set.new([rel]), node.outgoing_relations)
   end
+  
+  def test_get_all_relations
+    node = Node.new("Node2")
+    rel1 = Relation.new(nil, nil, nil)
+    rel2 = Relation.new(nil, nil, nil)
+    node.add_outgoing_relation(rel1)
+    node.add_incoming_relation(rel2)
+    assert_equal(Set.new([rel1, rel2]), node.get_all_relations)
+  end
 
 end

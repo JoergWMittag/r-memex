@@ -33,7 +33,7 @@ class Node
   end
   
   def get_all_relations
-    Set.new(@incoming_relations).merge(@outgoing_relations)
+    Set.new(@outgoing_relations).merge(@incoming_relations)
   end
   
   def add_incoming_relation(rel)
