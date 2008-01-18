@@ -9,6 +9,10 @@ class NodeContainer
     @nodes = Set.new
     @relations = Set.new
   end
+  
+  def generate_using(builder)
+    builder.generate(self)
+  end
 
   def add_relation(rel)
     if (@nodes.include?(rel.source) && @nodes.include?(rel.dest))

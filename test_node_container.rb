@@ -1,4 +1,6 @@
 require "test/unit"
+require "rubygems"
+require "mocha"
 
 require "node_container"
 require "node"
@@ -15,6 +17,13 @@ class TestNodeContainer < Test::Unit::TestCase
     nc.add_node(node)
     assert_equal(Set.new([node]), nc.nodes)
   end
+
+def test_generate_using
+  nc = NodeContainer.new
+  builder = mock()   #using a mocka object
+  builder.expects(:generate).with(nc)   #asserting :generate method is called
+  nc.generate_using(builder)
+end
 
   def test_remove_node
     nc = NodeContainer.new
