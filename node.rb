@@ -5,8 +5,9 @@ class Node
 
   attr_reader :name, :tags, :location, :description, :incoming_relations, :outgoing_relations
 
-  def initialize(name)
+  def initialize(name, url_string="http://localhost/")
     @name = name
+    @location = URI.parse(url_string)
     @tags = Set.new
     @incoming_relations = Set.new
     @outgoing_relations = Set.new
