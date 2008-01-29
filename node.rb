@@ -60,8 +60,4 @@ class Node
     @outgoing_relations.delete(rel)
   end
 
-  def get_all_relations
-    Set.new(@outgoing_relations).merge(@incoming_relations)
-  end
-  
 end

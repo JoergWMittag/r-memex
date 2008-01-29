@@ -54,43 +54,37 @@ class TestNode < Test::Unit::TestCase
   end
   
   def test_add_incoming_relation
-    node1 = Node.new("Node 1")
-    node2 = Node.new("Node 2")
-    rel = Relation.new("Relation 1->2")
-    node1.add_incoming_relation(rel)
-    node2.add_outgoing_relation(rel)
-    assert_equal(rel.source, node2)
-    assert_equal(rel.dest, node1)
-    assert_equal(Set.new([rel]), node1.incoming_relations)
-    assert_equal(Set.new([rel]), node2.outgoing_relations)
+    node = Node.new("Node")
+    rel = Relation.new("Relation")
+    node.add_incoming_relation(rel)
+    assert_equal(rel.dest, node)
+    assert_equal(Set.new([rel]), node.incoming_relations)
   end
   
   def test_remove_incoming_relation
-    node1 = Node.new("Node 1")
-    node2 = Node.new("Node 2")
-    rel = Relation.new("Relation 1->2")
-    node1.add_incoming_relation(rel)
-    node2.add_outgoing_relation(rel)
-    node1.remove_incoming_relation(rel)
+    node = Node.new("Node")
+    rel = Relation.new("Relation")
+    node.add_incoming_relation(rel)
+    node.remove_incoming_relation(rel)
+    assert_equal(Set.new([]), node.incoming_relations)
     assert_equal(rel.dest, nil)
-    node2.remove_outgoing_relation(rel)
-    assert_equal(rel.source, nil)
   end
   
   def test_add_outgoing_relation
-    node = Node.new("Node1")
-    rel = nil
+    node = Node.new("Node")
+    rel = Relation.new("Relation")
     node.add_outgoing_relation(rel)
+    assert_equal(rel.source, node)
     assert_equal(Set.new([rel]), node.outgoing_relations)
   end
   
-  def test_get_all_relations
-    node = Node.new("Node2")
-    rel1 = Relation.new(nil, nil, nil)
-    rel2 = Relation.new(nil, nil, nil)
-    node.add_outgoing_relation(rel1)
-    node.add_incoming_relation(rel2)
-    assert_equal(Set.new([rel1, rel2]), node.get_all_relations)
+  def test_remove_outgoing_relation
+    node = Node.new("Node")
+    rel = Relation.new("Relation")
+    node.add_outgoing_relation(rel)
+    node.remove_outgoing_relation(rel)
+    assert_equal(Set.new([]), node.outgoing_relations)
+    assert_equal(rel.source, nil)
   end
 
 end
