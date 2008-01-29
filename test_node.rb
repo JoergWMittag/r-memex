@@ -54,10 +54,27 @@ class TestNode < Test::Unit::TestCase
   end
   
   def test_add_incoming_relation
-    node = Node.new("Node1")
-    rel = nil
-    node.add_incoming_relation(rel)
-    assert_equal(Set.new([rel]), node.incoming_relations)
+    node1 = Node.new("Node 1")
+    node2 = Node.new("Node 2")
+    rel = Relation.new("Relation 1->2")
+    node1.add_incoming_relation(rel)
+    node2.add_outgoing_relation(rel)
+    assert_equal(rel.source, node2)
+    assert_equal(rel.dest, node1)
+    assert_equal(Set.new([rel]), node1.incoming_relations)
+    assert_equal(Set.new([rel]), node2.outgoing_relations)
+  end
+  
+  def test_remove_incoming_relation
+    node1 = Node.new("Node 1")
+    node2 = Node.new("Node 2")
+    rel = Relation.new("Relation 1->2")
+    node1.add_incoming_relation(rel)
+    node2.add_outgoing_relation(rel)
+    node1.remove_incoming_relation(rel)
+    assert_equal(rel.dest, nil)
+    node2.remove_outgoing_relation(rel)
+    assert_equal(rel.source, nil)
   end
   
   def test_add_outgoing_relation

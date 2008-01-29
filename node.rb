@@ -41,11 +41,23 @@ class Node
   end
   
   def add_incoming_relation(rel)
-    @incoming_relations.add(rel)
+    rel.dest = self
+    @incoming_relations << rel
+  end
+  
+  def remove_incoming_relation(rel)
+    rel.dest = nil
+    @incoming_relations.delete(rel)
   end
   
   def add_outgoing_relation(rel)
-    @outgoing_relations.add(rel)
+    rel.source = self
+    @outgoing_relations << rel
+  end
+  
+  def remove_outgoing_relation(rel)
+    rel.source = nil
+    @outgoing_relations.delete(rel)
   end
 
   def get_all_relations

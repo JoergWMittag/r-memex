@@ -1,9 +1,8 @@
 class Relation
-  attr_reader :source, :dest, :name
+  attr_reader :name
+  attr_accessor :source, :dest
 
-  def initialize(source, dest, name)
-    @source = source
-    @dest = dest
+  def initialize(name)
     @name = name
   end
 
