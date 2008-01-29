@@ -13,8 +13,21 @@ class Node
     @incoming_relations = Set.new
     @outgoing_relations = Set.new
     @time = time
+    @sub_nodes = []
   end
 
+  def location=(uri_string)
+    @location = URI.parse(uri_string)
+  end
+  
+  def description=(desc)
+    @description = desc.to_s
+  end
+  
+  def time=(time)
+    @time = time
+  end
+  
   def add_tag(tag)
     @tags << tag
   end
@@ -27,22 +40,6 @@ class Node
     return tags.include?(tag)
   end
   
-  def set_uri(uri_string)
-    @location = URI.parse(uri_string)
-  end
-  
-  def set_description(desc)
-    @description = desc.to_s
-  end
-  
-  def time=(time)
-    @time = time
-  end
-  
-  def get_all_relations
-    Set.new(@outgoing_relations).merge(@incoming_relations)
-  end
-  
   def add_incoming_relation(rel)
     @incoming_relations.add(rel)
   end
@@ -51,4 +48,8 @@ class Node
     @outgoing_relations.add(rel)
   end
 
+  def get_all_relations
+    Set.new(@outgoing_relations).merge(@incoming_relations)
+  end
+  
 end
