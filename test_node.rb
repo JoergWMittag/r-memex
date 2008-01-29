@@ -7,7 +7,12 @@ require "relation"
 
 class TestNode < Test::Unit::TestCase
   def test_initialisation
-    assert_not_nil(Node.new("NodeName"))
+    time = Time.now
+    node = Node.new("NodeName", "http://localhost/file.html", time)
+    assert_not_nil(node)
+    assert_equal(time, node.time)
+    assert_equal(URI.parse("http://localhost/file.html"), node.location)
+    assert_equal("NodeName", node.name)
   end
 
   def test_add_tag
