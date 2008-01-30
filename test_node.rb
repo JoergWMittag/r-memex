@@ -1,17 +1,14 @@
 require "test/unit"
+require "rubygems"
+require "mocha"
 require "set"
-require "uri"
 
 require "node"
-require "relation"
 
 class TestNode < Test::Unit::TestCase
   def test_initialisation
-    time = Time.now
-    node = Node.new("NodeName", "http://localhost/file.html", time)
+    node = Node.new("NodeName")
     assert_not_nil(node)
-    assert_equal(time, node.time)
-    assert_equal(URI.parse("http://localhost/file.html"), node.location)
     assert_equal("NodeName", node.name)
   end
 
@@ -35,15 +32,18 @@ class TestNode < Test::Unit::TestCase
   def test_includes_tag
     node = Node.new("NodeName")
     node.add_tag("Tag_Name_1")
-    assert_equal(true, node.has_tag?("Tag_Name_1"))
-    assert_equal(false, node.has_tag?("Tag_Name_2"))
+    assert_equal(true, node.includes_tag?("Tag_Name_1"))
+    assert_equal(false, node.includes_tag?("Tag_Name_2"))
   end
   
-  def test_set_uri
+  def test_set_location_with_malformed_uri
     node = Node.new("NodeName")
-    node.location="http://www.ruby.org"
-    assert_equal(URI.parse("http://www.ruby.org"), node.location)
-    assert_raise(URI::InvalidURIError) { node.location="mal formed" }
+    URI.expects(:parse).once.raises(URI::InvalidURIError)
+    assert_raise(URI::InvalidURIError) { node.location="malformed_uri" }
+
+    URI.expects(:parse).once.returns("something")
+    node.location="whatever"
+    assert_equal("something", node.location)
   end
   
   def test_set_description
@@ -55,36 +55,38 @@ class TestNode < Test::Unit::TestCase
   
   def test_add_incoming_relation
     node = Node.new("Node")
-    rel = Relation.new("Relation")
+    rel = mock()
+    rel.expects(:dest=).once.with(node)
     node.add_incoming_relation(rel)
-    assert_equal(rel.dest, node)
     assert_equal(Set.new([rel]), node.incoming_relations)
   end
   
   def test_remove_incoming_relation
     node = Node.new("Node")
-    rel = Relation.new("Relation")
+    rel = mock()
+    rel.expects(:dest=).once
     node.add_incoming_relation(rel)
+    rel.expects(:dest=).once.with(nil)
     node.remove_incoming_relation(rel)
     assert_equal(Set.new([]), node.incoming_relations)
-    assert_equal(rel.dest, nil)
   end
   
   def test_add_outgoing_relation
     node = Node.new("Node")
-    rel = Relation.new("Relation")
+    rel = mock()
+    rel.expects(:source=).once.with(node)
     node.add_outgoing_relation(rel)
-    assert_equal(rel.source, node)
     assert_equal(Set.new([rel]), node.outgoing_relations)
   end
   
   def test_remove_outgoing_relation
     node = Node.new("Node")
-    rel = Relation.new("Relation")
+    rel = mock()
+    rel.expects(:source=).once
     node.add_outgoing_relation(rel)
+    rel.expects(:source=).once.with(nil)
     node.remove_outgoing_relation(rel)
     assert_equal(Set.new([]), node.outgoing_relations)
-    assert_equal(rel.source, nil)
   end
 
 end

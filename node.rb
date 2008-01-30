@@ -3,17 +3,16 @@ require "uri"
 
 class Node
 
-  attr_reader :name, :tags, :location, :description, :time
+  attr_reader :name, :tags, :location, :description, :creation_time
   attr_reader :incoming_relations, :outgoing_relations
 
-  def initialize(name, url_string="http://localhost/", time=Time.now)
+  def initialize(name)
     @name = name
-    @location = URI.parse(url_string)
+    @location = nil
+    @creation_time = Time.now
     @tags = Set.new
     @incoming_relations = Set.new
     @outgoing_relations = Set.new
-    @time = time
-    @sub_nodes = []
   end
 
   def location=(uri_string)
@@ -23,11 +22,7 @@ class Node
   def description=(desc)
     @description = desc.to_s
   end
-  
-  def time=(time)
-    @time = time
-  end
-  
+
   def add_tag(tag)
     @tags << tag
   end
@@ -36,7 +31,7 @@ class Node
     @tags.delete(tag)
   end
 
-  def has_tag?(tag)
+  def includes_tag?(tag)
     return tags.include?(tag)
   end
   
