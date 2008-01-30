@@ -4,15 +4,14 @@ require "uri"
 class Node
 
   attr_reader :name, :tags, :location, :description, :creation_time
-  attr_reader :incoming_relations, :outgoing_relations
+  attr_reader :relations
 
   def initialize(name)
     @name = name
     @location = nil
     @creation_time = Time.now
     @tags = Set.new
-    @incoming_relations = Set.new
-    @outgoing_relations = Set.new
+    @relations = Set.new
   end
 
   def location=(uri_string)
@@ -35,24 +34,12 @@ class Node
     return tags.include?(tag)
   end
   
-  def add_incoming_relation(rel)
-    rel.dest = self
-    @incoming_relations << rel
+  def add_relation(rel)
+    @relations << rel
   end
   
-  def remove_incoming_relation(rel)
-    rel.dest = nil
-    @incoming_relations.delete(rel)
-  end
-  
-  def add_outgoing_relation(rel)
-    rel.source = self
-    @outgoing_relations << rel
-  end
-  
-  def remove_outgoing_relation(rel)
-    rel.source = nil
-    @outgoing_relations.delete(rel)
+  def remove_relation(rel)
+    @relations.delete(rel)
   end
 
 end

@@ -1,41 +1,52 @@
 require "test/unit"
 require "rubygems"
 require "mocha"
+require "set"
 
 require "node_container"
-require "node"
-require "relation"
+
 
 class TestNodeContainer < Test::Unit::TestCase
   def test_initialisation
       assert_not_nil(NodeContainer.new)
   end
 
+  def test_generate_using
+    nc = NodeContainer.new
+    builder = mock()
+    builder.expects(:generate).once.with(nc)
+    nc.generate_using(builder)
+  end
+
   def test_add_node
     nc = NodeContainer.new
-    node = Node.new("a")
+    node = mock()
     nc.add_node(node)
     assert_equal(Set.new([node]), nc.nodes)
   end
 
-def test_generate_using
-  nc = NodeContainer.new
-  builder = mock()   #using a mocka object
-  builder.expects(:generate).with(nc)   #asserting :generate method is called
-  nc.generate_using(builder)
-end
-
   def test_remove_node
     nc = NodeContainer.new
-    node1 = Node.new("a")
-    node2 = Node.new("b")
+    node1 = mock()
+    node2 = mock()
+    rel12 = mock()
+    
+    node1.expects(:add_relation).once.with(rel12)
+    node2.expects(:add_relation).once.with(rel12)
+    rel12.expects(:source=).with(node1)
+    rel12.expects(:dest=).with(node2)
+
     nc.add_node(node1)
     nc.add_node(node2)
-    rel = Relation.new(node1, node2, "relation")
-    nc.add_relation(rel)
-    assert_equal(Set.new([rel]), nc.relations)
+    nc.add_relation(rel12, node1, node2)
+    
+    
+    node1.expects(:relations).once.returns(Set.new([rel12]))
+    rel12.expects(:source).once.returns(node1)
+    rel12.expects(:dest).once.returns(node2)
+    node1.expects(:remove_relation).once.with(rel12)
+    node2.expects(:remove_relation).once.with(rel12)
     nc.remove_node(node1)
-    assert_equal(Set.new([node2]), nc.nodes)
     assert_equal(Set.new([]), nc.relations)
   end
 
@@ -72,33 +83,43 @@ end
 
   def test_add_relation
     nc = NodeContainer.new
-    node1 = Node.new("a")
-    node2 = Node.new("b")
-    node3 = Node.new("c")
+    node1 = mock()
+    node2 = mock()
+    rel12 = mock()
+    
+    node1.expects(:add_relation).once.with(rel12)
+    node2.expects(:add_relation).once.with(rel12)
+    rel12.expects(:source=).with(node1)
+    rel12.expects(:dest=).with(node2)
+    
     nc.add_node(node1)
     nc.add_node(node2)
-    rel1 = Relation.new(node1, node2, "Relation_1->2")
-    rel2 = Relation.new(node1, node3, "Relation_1->3")
-    nc.add_relation(rel1)
-    assert_equal(Set.new([rel1]), nc.relations)
-    nc.add_relation(rel2)
-    assert_equal(Set.new([rel1]), nc.relations)
+    nc.add_relation(rel12, node1, node2)
+    
+    assert_equal(Set.new([rel12]), nc.relations)
   end
 
   def test_remove_relation
     nc = NodeContainer.new
-    node1 = Node.new("a")
-    node2 = Node.new("b")
-    node3 = Node.new("c")
+    node1 = mock()
+    node2 = mock()
+    rel12 = mock()
+    
+    node1.expects(:add_relation).once.with(rel12)
+    node2.expects(:add_relation).once.with(rel12)
+    rel12.expects(:source=).with(node1)
+    rel12.expects(:dest=).with(node2)
+
     nc.add_node(node1)
     nc.add_node(node2)
-    nc.add_node(node3)
-    rel1 = Relation.new(node1, node2, "Relation_1->2")
-    rel2 = Relation.new(node1, node3, "Relation_1->3")
-    nc.add_relation(rel1)
-    nc.add_relation(rel2)
-    nc.remove_relation(rel1)
-    assert_equal(Set.new([rel2]), nc.relations)
+    nc.add_relation(rel12, node1, node2)
+
+    rel12.expects(:source).once.returns(node1)
+    rel12.expects(:dest).once.returns(node2)
+    node1.expects(:remove_relation).once.with(rel12)
+    node2.expects(:remove_relation).once.with(rel12)
+    nc.remove_relation(rel12)
+    assert_equal(Set.new([]), nc.relations)
   end
 
   def test_get_nodes

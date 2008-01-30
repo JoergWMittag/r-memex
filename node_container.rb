@@ -14,15 +14,19 @@ class NodeContainer
     builder.generate(self)
   end
 
-  def add_relation(rel)
-    if (@nodes.include?(rel.source) && @nodes.include?(rel.dest))
-      rel.source.add_outgoing_relation(rel)
-      rel.dest.add_incoming_relation(rel)
+  def add_relation(rel, source, dest)
+    if (@nodes.include?(source) && @nodes.include?(dest))
+      source.add_relation(rel)
+      rel.source=source
+      dest.add_relation(rel)
+      rel.dest=dest
       @relations << rel
     end
   end
 
   def remove_relation(rel)
+    rel.source.remove_relation(rel)
+    rel.dest.remove_relation(rel)
     @relations.delete(rel)
   end
 
@@ -32,7 +36,8 @@ class NodeContainer
 
   def remove_node(node)
     @nodes.delete(node)
-    node.get_all_relations.each { |rel| remove_relation(rel) }
+    #delete orphaned childs
+    node.relations.each { |rel| remove_relation(rel) }
   end
 
   def list_tags
@@ -43,7 +48,7 @@ class NodeContainer
 
   def absolute_frequency(tag)
     freq = 0
-    @nodes.collect { |node| freq += 1 if node.has_tag?(tag) }
+    @nodes.collect { |node| freq += 1 if node.includes_tag?(tag) }
     return freq
   end
 
@@ -61,7 +66,7 @@ class NodeContainer
   end
 
   def get_nodes(tag)
-    return Set.new(@nodes.select {|node| node.has_tag?(tag)})
+    return Set.new(@nodes.select {|node| node.includes_tag?(tag)})
   end
 
 end

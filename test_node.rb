@@ -53,40 +53,19 @@ class TestNode < Test::Unit::TestCase
     assert_not_equal("Unexpected", node.description)
   end
   
-  def test_add_incoming_relation
+  def test_add_relation
     node = Node.new("Node")
     rel = mock()
-    rel.expects(:dest=).once.with(node)
-    node.add_incoming_relation(rel)
-    assert_equal(Set.new([rel]), node.incoming_relations)
+    node.add_relation(rel)
+    assert_equal(Set.new([rel]), node.relations)
   end
   
-  def test_remove_incoming_relation
+  def test_remove_relation
     node = Node.new("Node")
     rel = mock()
-    rel.expects(:dest=).once
-    node.add_incoming_relation(rel)
-    rel.expects(:dest=).once.with(nil)
-    node.remove_incoming_relation(rel)
-    assert_equal(Set.new([]), node.incoming_relations)
-  end
-  
-  def test_add_outgoing_relation
-    node = Node.new("Node")
-    rel = mock()
-    rel.expects(:source=).once.with(node)
-    node.add_outgoing_relation(rel)
-    assert_equal(Set.new([rel]), node.outgoing_relations)
-  end
-  
-  def test_remove_outgoing_relation
-    node = Node.new("Node")
-    rel = mock()
-    rel.expects(:source=).once
-    node.add_outgoing_relation(rel)
-    rel.expects(:source=).once.with(nil)
-    node.remove_outgoing_relation(rel)
-    assert_equal(Set.new([]), node.outgoing_relations)
+    node.add_relation(rel)
+    node.remove_relation(rel)
+    assert_equal(Set.new([]), node.relations)
   end
 
 end
