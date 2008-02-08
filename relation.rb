@@ -5,5 +5,17 @@ class Relation
   def initialize(name)
     @name = name
   end
+  
+  def weight?
+    if @weight
+      return @weight
+    else
+      return 1.0
+    end
+  end
+  
+  def weight=(weight)
+    @weight = weight
+  end
 
 end
