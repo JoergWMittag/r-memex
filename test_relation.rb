@@ -12,9 +12,9 @@ class TestRelation < Test::Unit::TestCase
   
   def test_weight
     rel = Relation.new("name")
-    assert_equal(rel.weight?, 1.0)
+    assert_equal(rel.weight, 1.0)
     rel.weight=5.5
-    assert_equal(rel.weight?, 5.5)
-    assert_not_equal(rel.weight?, 5.4)
+    assert_equal(rel.weight, 5.5)
+    assert_not_equal(rel.weight, 5.4)
   end
 end

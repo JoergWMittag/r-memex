@@ -6,7 +6,7 @@ class Relation
     @name = name
   end
   
-  def weight?
+  def weight
     if @weight
       return @weight
     else
