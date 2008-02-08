@@ -69,4 +69,9 @@ class NodeContainer
     return Set.new(@nodes.select {|node| node.includes_tag?(tag)})
   end
 
+  def merge(node_container)
+    @nodes.merge(node_container.nodes)
+    @relations.merge(node_container.relations)
+  end
+
 end

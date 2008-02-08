@@ -141,6 +141,56 @@ class TestNodeContainer < Test::Unit::TestCase
     assert_equal(Set.new([node1, node4]), nc.get_nodes("tag_a"))
   end
 
+  def test_merge
+    nc1 = NodeContainer.new
+    node1 = mock()
+    rel1 = mock()
+    rel1.expects(:source=).once
+    rel1.expects(:dest=).once
+    node1.expects(:add_relation).at_least_once.with(rel1)
+    
+    node2 = mock()
+    rel2 = mock()
+    rel2.expects(:source=).once
+    rel2.expects(:dest=).once
+    node2.expects(:add_relation).at_least_once.with(rel2)
+    
+    nc1.add_node(node1)
+    nc1.add_node(node2)
+    nc1.add_relation(rel1, node1, node1)
+    nc1.add_relation(rel2, node2, node2)
+
+    nc2 = NodeContainer.new
+    node3 = mock()
+    rel3 = mock()
+    rel3.expects(:source=).once
+    rel3.expects(:dest=).once
+    node3.expects(:add_relation).at_least_once.with(rel3)
+    
+    node4 = mock()
+    rel4 = mock()
+    rel4.expects(:source=).once
+    rel4.expects(:dest=).once
+    node4.expects(:add_relation).at_least_once.with(rel4)
+    
+    nc2.add_node(node3)
+    nc2.add_node(node4)
+    nc2.add_relation(rel3, node3, node3)
+    nc2.add_relation(rel4, node4, node4)
+
+    nodes = Set.new
+    nodes.merge(nc1.nodes)
+    nodes.merge(nc2.nodes)
+
+    relations = Set.new()
+    relations.merge(nc1.relations)
+    relations.merge(nc2.relations)
+
+    nc1.merge(nc2)
+    assert_equal(nodes, nc1.nodes)
+    assert_equal(relations, nc1.relations)
+  end
+  
   private
 
   def init_tags
