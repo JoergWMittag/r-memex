@@ -2,6 +2,7 @@ require "set"
 require "uri"
 
 class Node
+  include Comparable
 
   attr_accessor :name, :creation_time
   attr_reader :relations, :tags, :location, :description
@@ -12,6 +13,10 @@ class Node
     @creation_time = Time.now
     @tags = Set.new
     @relations = Set.new
+  end
+  
+  def <=>(obj)
+    name <=> obj.name
   end
   
   def ==(obj)

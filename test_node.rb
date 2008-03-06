@@ -40,6 +40,15 @@ class TestNode < Test::Unit::TestCase
     assert_equal(node1, node2)
   end
 
+  def test_comp
+    node1 = Node.new("name1")
+    node2 = Node.new("name2")
+    node3 = Node.new("name3")
+    assert(node1 < node2, "node1 should be smaller")
+    assert(node2 > node1, "node1 should be smaller")
+    assert(node2.between?(node1, node3), "Should be between")
+  end
+
   def test_add_tag
     node = Node.new("NodeName")
     node.add_tag("Tag_Name")
