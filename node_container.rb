@@ -30,7 +30,7 @@ class NodeContainer
     file.close
   end
   
-  def load(location)
+  def self.load(location)
     file = File.new(location, 'r')
     return Marshal.load(file)
   end
