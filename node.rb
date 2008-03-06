@@ -3,8 +3,8 @@ require "uri"
 
 class Node
 
-  attr_reader :name, :tags, :location, :description, :creation_time
-  attr_reader :relations
+  attr_accessor :name, :creation_time
+  attr_reader :relations, :tags, :location, :description
 
   def initialize(name)
     @name = name
@@ -13,7 +13,13 @@ class Node
     @tags = Set.new
     @relations = Set.new
   end
-
+  
+  def ==(obj)
+    @name == obj.name && @location == obj.location \
+      && @creation_time == obj.creation_time && @tags == obj.tags \
+      && @relations == obj.relations
+  end
+  
   def location=(uri_string)
     @location = URI.parse(uri_string)
   end

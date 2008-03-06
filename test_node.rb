@@ -11,6 +11,34 @@ class TestNode < Test::Unit::TestCase
     assert_not_nil(node)
     assert_equal("NodeName", node.name)
   end
+  
+  def test_gleich
+    node1 = Node.new("Name")
+    node2 = Node.new("Name")
+    assert_not_equal(node1, node2)
+
+    node2.creation_time = node1.creation_time
+    assert_equal(node1, node2)
+
+    node1.name = "Other"
+    assert_not_equal(node1, node2)
+    node1.name = "Name"
+    assert_equal(node1, node2)
+    node1.add_tag("Test")
+    assert_not_equal(node1, node2)
+    node2.add_tag("Test")
+    assert_equal(node1, node2)
+    
+    node1.location = "http://localhost/"
+    assert_not_equal(node1, node2)
+    node2.location = "http://localhost/"
+    assert_equal(node1, node2)
+    
+    node1.add_relation("Relation")
+    assert_not_equal(node1, node2)
+    node2.add_relation("Relation")
+    assert_equal(node1, node2)
+  end
 
   def test_add_tag
     node = Node.new("NodeName")
