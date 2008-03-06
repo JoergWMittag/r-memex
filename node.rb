@@ -28,7 +28,7 @@ class Node
   def eql?(obj)
     @name == obj.name && @location == obj.location \
      && @tags == obj.tags \
-      && @relations.sort == obj.relations.sortÅ
+      && @relations.sort == obj.relations.sort
   end
   
   def location=(uri_string)
