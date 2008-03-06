@@ -2,30 +2,31 @@ require "rubygems"
 require "ncurses"
 require "node_container"
 
-nc = nil
-
-def help
+class Controller
+  attr_reader :nc
+  attr_writer :nc
   
-end
-
-def usage
+  def initialize
+    @nc = NodeContainer.new
+  end
   
-end
-
-def info
+  def new_container
+    @nc = NodeContainer.new
+  end
   
-end
-
-def load
+  def add_node(node_str)
+    @nc.add_node(node_str)
+  end
   
-end
-
-def save
+  def load
+    @nc = NodeContainer.load("save.bin")
+  end
   
-end
-
-def new
-  nc = NodeContainer.new
+  def save
+    @nc.save("save.bin")
+  end
+  
+  
 end
 
 begin
@@ -36,27 +37,34 @@ begin
   Ncurses.stdscr.keypad(true)     # turn on keypad mode
   cmd_window = Ncurses::WINDOW.new(1, Ncurses.COLS, Ncurses.LINES-1, 0)
   out_window = Ncurses::WINDOW.new(Ncurses.LINES-1, Ncurses.COLS, 0, 0)
+  
+  ctrl = Controller.new
+  
   while(true)
-    out_window.refresh
+    out_window.clear
     cmd_window.mvaddstr(0, 0, ":")
     cmd_window.clrtoeol
     cmd_window.getstr(command="")
     case(command)
       when "help"
-        out_window.mvaddstr(0, 0, "help\n")
+        out_window.mvaddstr(0, 0, "help:\n")
       when "info"
-        out_window.mvaddstr(0, 0, "info\n")
+        out_window.mvaddstr(0, 0, "info:\n")
+        out_window.mvaddstr(1, 0, ctrl.nc.to_s)
       when "new"
-        out_window.mvaddstr(0, 0, "new\n")
+        out_window.mvaddstr(0, 0, "new:\n")
+        ctrl.new_container
       when "load"
-        out_window.mvaddstr(0, 0, "laod\n")
+        out_window.mvaddstr(0, 0, "laod:\n")
+        ctrl.load
       when "save"
-        out_window.mvaddstr(0, 0, "save\n")
+        out_window.mvaddstr(0, 0, "save:\n")
+        ctrl.save
       when "exit"
-        out_window.mvaddstr(0, 0, "exit\n")
+        out_window.mvaddstr(0, 0, "exit:\n")
         break
       else
-        out_window.mvaddstr(0, 0, "usage\n")
+        out_window.mvaddstr(0, 0, "usage:\n")
       end
       out_window.refresh
   end
