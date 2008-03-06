@@ -11,6 +11,23 @@ class TestNodeContainer < Test::Unit::TestCase
       assert_not_nil(NodeContainer.new)
   end
 
+  def test_save
+    nc1 = init_tags
+    nc1.save("some.name")
+    file = File.new("some.name", 'r')
+    nc2 = Marshal.load(file)
+    assert_equal(nc1, nc2)
+  end
+  
+  def test_load
+    nc1 = init_tags
+    file = File.new("other.file", 'w')
+    Marshal.dump(nc1, file)
+    file.close
+    nc2 = nc1.load("other.file")
+    assert_equal(nc1, nc2)
+  end
+
   def test_generate_using
     nc = NodeContainer.new
     builder = mock()
@@ -194,13 +211,13 @@ class TestNodeContainer < Test::Unit::TestCase
   private
 
   def init_tags
+    nc = NodeContainer.new
     node1 = Node.new("Node1")
     node2 = Node.new("Node2")
     node1.add_tag("Tag1")
     node2.add_tag("Tag3")
     node2.add_tag("Tag1")
     node2.add_tag("Tag2")
-    nc = NodeContainer.new
     nc.add_node(node1)
     nc.add_node(node2)
     return nc

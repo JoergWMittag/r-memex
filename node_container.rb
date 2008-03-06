@@ -10,8 +10,27 @@ class NodeContainer
     @relations = Set.new
   end
   
+  def ==(container)
+    if (container.nodes.sort == @nodes.sort && container.relations.sort == @relations.sort)
+      true
+    else
+      false
+    end
+  end
+  
   def generate_using(builder)
     builder.generate(self)
+  end
+
+  def save(location)
+    file = File.new(location, 'w')
+    Marshal.dump(self, file)
+    file.close
+  end
+  
+  def load(location)
+    file = File.new(location, 'r')
+    return Marshal.load(file)
   end
 
   def add_relation(rel, source, dest)
