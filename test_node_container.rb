@@ -4,23 +4,45 @@ require "mocha"
 require "set"
 
 require "node_container"
-
+require "relation"
 
 class TestNodeContainer < Test::Unit::TestCase
   def test_initialisation
       assert_not_nil(NodeContainer.new)
   end
 
+  def test_gleich
+    nc1 = NodeContainer.new
+    nc2 = NodeContainer.new
+    assert_equal(nc1, nc2)
+    
+    node1 = Node.new("node1")
+    node2 = Node.new("node2")
+    nc1.add_node(node1)
+    nc1.add_node(node2)
+    assert_not_equal(nc1, nc2)
+    nc2.add_node(node1)
+    nc2.add_node(node2)
+    assert_equal(nc1, nc2)
+    
+    relation = Relation.new("Relation")
+    nc1.add_relation(relation, node1, node2)
+    assert_not_equal(nc1, nc2)
+    nc2.add_relation(relation, node1, node2)
+    assert_equal(nc1, nc2)
+  end
+
   def test_save
-    nc1 = init_tags
+    nc1 = NodeContainer.new
     nc1.save("some.name")
     file = File.new("some.name", 'r')
     nc2 = Marshal.load(file)
+    file.close
     assert_equal(nc1, nc2)
   end
   
   def test_load
-    nc1 = init_tags
+    nc1 = NodeContainer.new
     file = File.new("other.file", 'w')
     Marshal.dump(nc1, file)
     file.close

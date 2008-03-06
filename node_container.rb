@@ -10,12 +10,9 @@ class NodeContainer
     @relations = Set.new
   end
   
-  def ==(container)
-    if (container.nodes.sort == @nodes.sort && container.relations.sort == @relations.sort)
-      true
-    else
-      false
-    end
+  def ==(obj)
+    obj.nodes == @nodes \
+      && obj.relations == @relations
   end
   
   def generate_using(builder)
@@ -36,9 +33,9 @@ class NodeContainer
   def add_relation(rel, source, dest)
     if (@nodes.include?(source) && @nodes.include?(dest))
       source.add_relation(rel)
-      rel.source=source
+      rel.source = source
       dest.add_relation(rel)
-      rel.dest=dest
+      rel.dest = dest
       @relations << rel
     end
   end
