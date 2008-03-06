@@ -9,7 +9,11 @@ class Relation
   end
   
   def ==(obj)
-    @name == obj.name && @source == obj.source && @dest == obj.dest
+    name == obj.name
+  end
+  
+  def eql?(obj)
+    name.eql?(obj.name)
   end
   
   def weight

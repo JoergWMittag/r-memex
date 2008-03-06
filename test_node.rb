@@ -15,29 +15,35 @@ class TestNode < Test::Unit::TestCase
   def test_gleich
     node1 = Node.new("Name")
     node2 = Node.new("Name")
-    assert_not_equal(node1, node2)
-
-    node2.creation_time = node1.creation_time
     assert_equal(node1, node2)
+    assert(node1.eql?(node2), "Should be eql")
 
     node1.name = "Other"
     assert_not_equal(node1, node2)
+    assert(!node1.eql?(node2), "Should not be equal")
     node1.name = "Name"
     assert_equal(node1, node2)
+    assert(node1.eql?(node2), "Should be eql")
     node1.add_tag("Test")
     assert_not_equal(node1, node2)
+    assert(!node1.eql?(node2), "Should not be equal")
     node2.add_tag("Test")
     assert_equal(node1, node2)
+    assert(node1.eql?(node2), "Should be eql")
     
     node1.location = "http://localhost/"
     assert_not_equal(node1, node2)
+    assert(!node1.eql?(node2), "Should not be equal")
     node2.location = "http://localhost/"
     assert_equal(node1, node2)
+    assert(node1.eql?(node2), "Should be eql")
     
     node1.add_relation("Relation")
     assert_not_equal(node1, node2)
+    assert(!node1.eql?(node2), "Should not be equal")
     node2.add_relation("Relation")
     assert_equal(node1, node2)
+    assert(node1.eql?(node2), "Should be eql")
   end
 
   def test_comp

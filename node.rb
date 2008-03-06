@@ -21,8 +21,14 @@ class Node
   
   def ==(obj)
     @name == obj.name && @location == obj.location \
-      && @creation_time == obj.creation_time && @tags == obj.tags \
-      && @relations == obj.relations
+     && @tags == obj.tags \
+      && @relations.sort == obj.relations.sort
+  end
+  
+  def eql?(obj)
+    @name == obj.name && @location == obj.location \
+     && @tags == obj.tags \
+      && @relations.sort == obj.relations.sortÅ
   end
   
   def location=(uri_string)

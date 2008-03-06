@@ -11,8 +11,13 @@ class NodeContainer
   end
   
   def ==(obj)
-    obj.nodes == @nodes \
-      && obj.relations == @relations
+    obj.nodes.sort == nodes.sort \
+      && obj.relations.sort == relations.sort
+  end
+  
+  def eql?(obj)
+    obj.nodes.sort.eql?(nodes.sort) \
+     && obj.relations.sort.eql?(relations.sort)
   end
   
   def generate_using(builder)
@@ -31,7 +36,7 @@ class NodeContainer
   end
 
   def add_relation(rel, source, dest)
-    if (@nodes.include?(source) && @nodes.include?(dest))
+    if (nodes.include?(source) && nodes.include?(dest))
       source.add_relation(rel)
       rel.source = source
       dest.add_relation(rel)
@@ -47,7 +52,11 @@ class NodeContainer
   end
 
   def add_node(node)
-    @nodes << node
+    if (node.instance_of?(String))
+      @nodes << Node.new(node)
+    else
+      @nodes << node
+    end
   end
 
   def remove_node(node)
