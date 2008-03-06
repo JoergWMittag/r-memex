@@ -4,6 +4,12 @@ class Relation
 
   def initialize(name)
     @name = name
+    @source = nil
+    @dest = nil
+  end
+  
+  def ==(obj)
+    @name == obj.name && @source == obj.source && @dest == obj.dest
   end
   
   def weight
