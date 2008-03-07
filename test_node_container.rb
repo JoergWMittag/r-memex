@@ -250,7 +250,7 @@ class TestNodeContainer < Test::Unit::TestCase
     nc = NodeContainer.new
     nc.add_node(node)
     
-    str=<<END_OUTPUT
+    str = <<END_OUTPUT
 Node:
 Return String 1
 END_OUTPUT
