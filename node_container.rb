@@ -99,4 +99,9 @@ class NodeContainer
     @relations.merge(node_container.relations)
   end
 
+  def to_s
+    str = ""
+    @nodes.each { |node| str += "Node:\n"+ node.to_s + "\n"}
+    return str
+  end
 end
