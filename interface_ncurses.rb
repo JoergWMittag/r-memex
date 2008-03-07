@@ -3,11 +3,12 @@ require "ncurses"
 require "node_container"
 
 class Controller
-  attr_reader :nc
-  attr_writer :nc
+  attr_accessor :nc, :selected
+
   
   def initialize
     @nc = NodeContainer.new
+    @selected = Array.new
   end
   
   def new_container
@@ -18,6 +19,10 @@ class Controller
     @nc.add_node(node_str)
   end
   
+  def add_tag(tag_str)
+    selected.each { |node| node.add_tag(tag_str) }
+  end
+  
   def load(string)
     @nc = NodeContainer.load(string)
   end
@@ -25,13 +30,22 @@ class Controller
   def save(string)
     @nc.save(string)
   end
+  
+  def get_node(str)
+    @selected = @nc.nodes.find_all { |node| node.name == str}
+  end
 end
 
-def get_opt(cmd, out)
+def get_opt(cmd, out, msg)
+  out.addstr(msg)
   out.refresh
   cmd.clear
   cmd.getstr(str="")
   return str
+end
+
+def main_command
+  
 end
 
 begin
@@ -71,8 +85,29 @@ begin
         ctrl.save(str)
       when "add_node"
         out_window.mvaddstr(0, 0, "add_node:\n")
-        str = get_opt(cmd_window, out_window)
+        str = get_opt(cmd_window, out_window, "enter node name!\n")
         ctrl.add_node(str)
+        out_window.addstr("node: " + str + " added!")
+      when "select_node"
+        out_window.mvaddstr(0, 0, "select_nodes:\n")
+        name = get_opt(cmd_window, out_window, "enter node name\n")
+        result = ctrl.get_node(name)
+        if result.size == 0
+          out_window.addstr("no nodes selected")
+        elsif result.size == 1
+          out_window.addstr("one node selected\n" + result[0].to_s)
+        else
+          out_window.addstr(result.size.to_s + " nodes selectd :\n" + result.to_s + "\n")
+        end
+      when "add_tag"
+        out_window.mvaddstr(0, 0, "tag_node:\n")
+        if ctrl.selected.size == 0
+          out_window.add_str("no nodes selected\n")
+        else
+          str = get_opt(cmd_window, out_window, "enter a tag\n")
+          ctrl.add_tag(str)
+          out_window.addstr("Tag: \"" + str + "\" added to " + ctrl.selected.size.to_s + " selected nodes")
+        end
       when "exit"
         out_window.mvaddstr(0, 0, "exit:\n")
         break
