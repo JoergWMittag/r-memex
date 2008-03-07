@@ -58,7 +58,7 @@ class TestNodeContainer < Test::Unit::TestCase
     file = File.new("other.file", 'w')
     Marshal.dump(nc1, file)
     file.close
-    nc2 = nc1.load("other.file")
+    nc2 = NodeContainer.load("other.file")
     assert_equal(nc1, nc2)
   end
 
@@ -241,6 +241,21 @@ class TestNodeContainer < Test::Unit::TestCase
     nc1.merge(nc2)
     assert_equal(nodes, nc1.nodes)
     assert_equal(relations, nc1.relations)
+  end
+  
+  def test_to_s
+    node = mock()
+    node.expects(:to_s).returns("Return String 1")
+    
+    nc = NodeContainer.new
+    nc.add_node(node)
+    
+    str=<<END_OUTPUT
+Node:
+Return String 1
+END_OUTPUT
+
+    assert_equal(str, nc.to_s)
   end
   
   private
