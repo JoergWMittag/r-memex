@@ -111,4 +111,16 @@ class TestNode < Test::Unit::TestCase
     assert_equal(Set.new([]), node.relations)
   end
 
+  def test_to_s
+    str = <<END_OUTPUT
+Name: NodeName
+Location: http://localhost/
+Creation Time: Thu Jan 01 01:00:00 +0100 1970
+
+END_OUTPUT
+    node = Node.new("NodeName")
+    node.creation_time = Time.at(0)
+    node.location = "http://localhost/"
+    assert_equal(str, node.to_s)
+  end
 end

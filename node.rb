@@ -58,5 +58,13 @@ class Node
   def remove_relation(rel)
     @relations.delete(rel)
   end
+  
+  def to_s
+    str = "Name: " + @name + "\n"
+    str += "Location: " + @location.to_s + "\n"
+    str += "Creation Time: " + @creation_time.to_s + "\n"
+    str += "\n"
+    return str
+  end
 
 end
