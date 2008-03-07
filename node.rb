@@ -65,7 +65,9 @@ class Node
     str += "Creation Time: " + @creation_time.to_s + "\n"
     str += "Tags:"
     @tags.each { |tag| str += " " + tag + ","}
-    str.chop!
+    if @tags.size > 0
+      str.chop!
+    end
     str += "\n"
     return str
   end
