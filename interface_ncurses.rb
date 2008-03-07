@@ -18,15 +18,20 @@ class Controller
     @nc.add_node(node_str)
   end
   
-  def load
-    @nc = NodeContainer.load("save.bin")
+  def load(string)
+    @nc = NodeContainer.load(string)
   end
   
-  def save
-    @nc.save("save.bin")
+  def save(string)
+    @nc.save(string)
   end
-  
-  
+end
+
+def get_opt(cmd, out)
+  out.refresh
+  cmd.clear
+  cmd.getstr(str="")
+  return str
 end
 
 begin
@@ -48,6 +53,8 @@ begin
     case(command)
       when "help"
         out_window.mvaddstr(0, 0, "help:\n")
+        str = get_opt(cmd_window, out_window)
+        out_window.mvaddstr(1, 0, str+"\n")
       when "info"
         out_window.mvaddstr(0, 0, "info:\n")
         out_window.mvaddstr(1, 0, ctrl.nc.to_s)
@@ -56,10 +63,16 @@ begin
         ctrl.new_container
       when "load"
         out_window.mvaddstr(0, 0, "laod:\n")
-        ctrl.load
+        str = get_opt(cmd_window, out_window)
+        ctrl.load(str)
       when "save"
         out_window.mvaddstr(0, 0, "save:\n")
-        ctrl.save
+        str = get_opt(cmd_window, out_window)
+        ctrl.save(str)
+      when "add_node"
+        out_window.mvaddstr(0, 0, "add_node:\n")
+        str = get_opt(cmd_window, out_window)
+        ctrl.add_node(str)
       when "exit"
         out_window.mvaddstr(0, 0, "exit:\n")
         break
@@ -67,8 +80,7 @@ begin
         out_window.mvaddstr(0, 0, "usage:\n")
       end
       out_window.refresh
-  end
-  
+  end  
 ensure
     Ncurses.echo
     Ncurses.nocbreak
