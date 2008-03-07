@@ -63,6 +63,10 @@ class Node
     str = "Name: " + @name + "\n"
     str += "Location: " + @location.to_s + "\n"
     str += "Creation Time: " + @creation_time.to_s + "\n"
+    str += "Tags:"
+    @tags.each { |tag| str += " " + tag + ","}
+    str.chop!
+    str += "\n"
     return str
   end
 
