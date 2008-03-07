@@ -116,7 +116,6 @@ class TestNode < Test::Unit::TestCase
 Name: NodeName
 Location: http://localhost/
 Creation Time: Thu Jan 01 01:00:00 +0100 1970
-
 END_OUTPUT
     node = Node.new("NodeName")
     node.creation_time = Time.at(0)

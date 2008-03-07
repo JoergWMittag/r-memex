@@ -63,7 +63,6 @@ class Node
     str = "Name: " + @name + "\n"
     str += "Location: " + @location.to_s + "\n"
     str += "Creation Time: " + @creation_time.to_s + "\n"
-    str += "\n"
     return str
   end
 
