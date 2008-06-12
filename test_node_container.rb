@@ -174,7 +174,7 @@ class TestNodeContainer < Test::Unit::TestCase
     assert_equal(Set.new([]), nc.relations)
   end
 
-  def test_get_nodes
+  def test_node_by_tag
     nc = NodeContainer.new
     node1 = Node.new("a")
     node2 = Node.new("b")
@@ -189,8 +189,22 @@ class TestNodeContainer < Test::Unit::TestCase
     node3.add_tag("tag_c")
     node4.add_tag("tag_d")
     node4.add_tag("tag_a")
-    assert_equal(Set.new([node2]), nc.get_nodes("tag_b"))
-    assert_equal(Set.new([node1, node4]), nc.get_nodes("tag_a"))
+    assert_equal(Array.new([node2]), nc.nodes_by_tag("tag_b"))
+    assert_equal(Array.new([node1, node4]), nc.nodes_by_tag("tag_a"))
+  end
+  
+  def test_node_by_name
+    nc = NodeContainer.new
+    node1 = Node.new("a")
+    node2 = Node.new("a")
+    node3 = Node.new("c")
+    node4 = Node.new("d")
+    nc.add_node(node1)
+    nc.add_node(node2)
+    nc.add_node(node3)
+    nc.add_node(node4)
+    assert_equal(Array.new([node1, node2]), nc.nodes_by_name("a"))
+    assert_equal(Array.new([node3]), nc.nodes_by_name("c"))
   end
 
   def test_merge
