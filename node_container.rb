@@ -90,8 +90,12 @@ class NodeContainer
     freq.each { |key, value| freq[key] = value.to_f / @nodes.size }
   end
 
-  def get_nodes(tag)
-    return Set.new(@nodes.select {|node| node.includes_tag?(tag)})
+  def nodes_by_tag(tag)
+    return @nodes.select {|node| node.includes_tag?(tag)}
+  end
+  
+  def nodes_by_name(name)
+    return @nodes.select {|node| node.name.eql?(name)}
   end
 
   def merge(node_container)
