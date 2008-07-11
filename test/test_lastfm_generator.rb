@@ -19,7 +19,7 @@ class TestLastFMGenerator < Test::Unit::TestCase
     generator.generate(nodecontainer)
     online_friends = Array.new
     nodecontainer.nodes.each { |node| online_friends.push(node.name) }
-    actual_friends = ["tcb787", "OwlsToAthens", "amawbb", "berlin_alex", "klettermaster", "t-i-g-g-e-r", "Tornappart", "sankatze", "bitalias", "jaeddae", "pricelessperson", "wedgin", "SuziSonne", "analbina", "sariti", "littlewing_", "Doml", "greenwonderland"]
+    actual_friends = %w[tcb787 OwlsToAthens amawbb berlin_alex klettermaster t-i-g-g-e-r Tornappart sankatze bitalias jaeddae pricelessperson wedgin SuziSonne analbina sariti littlewing_ Doml greenwonderland]
     assert_equal(actual_friends.sort, online_friends.sort)
   end
   

@@ -80,7 +80,7 @@ class TestNode < Test::Unit::TestCase
     assert_equal(true, node.includes_tag?("Tag_Name_1"))
     assert_equal(false, node.includes_tag?("Tag_Name_2"))
     assert_equal(true, node.includes_tag?(["Tag_Name_1"]))
-    assert_equal(true, node.includes_tag?(["Tag_Name_1", "Tag_Name_3"]))
+    assert_equal(true, node.includes_tag?(%w[Tag_Name_1 Tag_Name_3]))
   end
   
   def test_set_location_with_malformed_uri

@@ -10,7 +10,7 @@ class TestController < Test::Unit::TestCase
   end
   
   def test_tagstr_to_array
-    expected = ["Test1", "Test2", "Test 3", "Test4"]
+    expected = %W[Test1 Test2 Test\ 3 Test4]
     actual = @ctrl.tagstr_to_array("Test1, Test2, Test 3, Test4")
     assert_equal(expected, actual)
   end

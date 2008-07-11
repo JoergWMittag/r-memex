@@ -109,7 +109,7 @@ class TestNodeContainer < Test::Unit::TestCase
 
   def test_list_tags
     nc = init_tags
-    tagset = Set.new(["Tag1", "Tag2", "Tag3"])
+    tagset = Set.new(%w[Tag1 Tag2 Tag3])
     assert_equal(tagset, nc.list_tags)
   end
 
