@@ -1,6 +1,6 @@
 require "test/unit"
 
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'bin')
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "interface_highline"
 
 class TestController < Test::Unit::TestCase
