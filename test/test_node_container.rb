@@ -3,6 +3,7 @@ require "rubygems"
 require "mocha"
 require "set"
 
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "node_container"
 require "relation"
 

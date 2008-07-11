@@ -2,6 +2,7 @@ require "rubygems"
 require "highline"
 require "pp"
 
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "node_container"
 require "lastfm_generator"
 
