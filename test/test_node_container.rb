@@ -5,6 +5,12 @@ require "node_container"
 require "relation"
 
 class TestNodeContainer < Test::Unit::TestCase
+  def setup
+    File.delete('some.name', 'other.file')
+  rescue Errno::ENOENT; end
+
+  alias_method :teardown, :setup
+
   def test_initialisation
       assert_not_nil(NodeContainer.new)
   end
