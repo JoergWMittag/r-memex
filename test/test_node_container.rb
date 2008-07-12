@@ -1,9 +1,6 @@
-require "test/unit"
-require "rubygems"
-require "mocha"
+require File.join(File.dirname(__FILE__), 'test_helper')
 require "set"
 
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "node_container"
 require "relation"
 

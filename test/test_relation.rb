@@ -1,6 +1,5 @@
-require "test/unit"
+require File.join(File.dirname(__FILE__), 'test_helper')
 
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "relation"
 require "node"
 

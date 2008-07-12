@@ -1,9 +1,7 @@
-require "test/unit"
+require File.join(File.dirname(__FILE__), 'test_helper')
 
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "lastfm_generator"
 require "node_container"
-require "rubygems"
 require "scrobbler"
 
 class TestLastFMGenerator < Test::Unit::TestCase
