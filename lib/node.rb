@@ -65,14 +65,14 @@ class Node
 
   def to_s
     str = "Name: #{@name}\n"
-    str += "Location: #{@location}\n"
-    str += "Creation Time: #{@creation_time}\n"
-    str += 'Tags:'
-    @tags.each { |tag| str += " #{tag},"}
+    str << "Location: #{@location}\n"
+    str << "Creation Time: #{@creation_time}\n"
+    str << 'Tags:'
+    @tags.each { |tag| str << " #{tag},"}
     if @tags.size > 0
       str.chop!
     end
-    str += "\n"
+    str << "\n"
     return str
   end
 end

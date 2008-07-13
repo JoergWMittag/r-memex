@@ -106,7 +106,7 @@ class NodeContainer
 
   def to_s
     str = ''
-    @nodes.each { |node| str += "Node:\n"+ node.to_s + "\n"}
+    @nodes.each { |node| str << "Node:\n#{node}\n"}
     return str
   end
 end
