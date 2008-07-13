@@ -1,4 +1,5 @@
-require "rubygems"
+begin require 'rubygems'; rescue LoadError
+else begin gem 'highline', '~> 1.4.0'; rescue Gem::LoadError; end end
 require "highline"
 require "pp"
 

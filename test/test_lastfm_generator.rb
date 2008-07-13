@@ -2,6 +2,7 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 
 require "lastfm_generator"
 require "node_container"
+begin gem 'scrobbler', '~> 0.1.1'; rescue Gem::LoadError; end
 require "scrobbler"
 
 class TestLastFMGenerator < Test::Unit::TestCase

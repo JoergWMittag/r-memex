@@ -1,3 +1,5 @@
+begin require 'rubygems'; rescue LoadError
+else begin gem 'Ridiculous', '~> 0.6'; rescue Gem::LoadError; end end
 require "ridiculous"
 include Ridiculous
 

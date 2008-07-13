@@ -1,4 +1,5 @@
-require "rubygems"
+begin require 'rubygems'; rescue LoadError
+else begin gem 'scrobbler', '~> 0.1.1'; rescue Gem::LoadError; end end
 require "scrobbler"
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
