@@ -2,7 +2,7 @@
 
 require File.join(File.dirname(__FILE__), 'test_helper')
 
-require "interface_highline"
+require 'interface_highline'
 
 class TestController < Test::Unit::TestCase
   def setup
@@ -11,12 +11,12 @@ class TestController < Test::Unit::TestCase
 
   def test_tagstr_to_array
     expected = %W[Test1 Test2 Test\ 3 Test4]
-    actual = @ctrl.tagstr_to_array("Test1, Test2, Test 3, Test4")
+    actual = @ctrl.tagstr_to_array('Test1, Test2, Test 3, Test4')
     assert_equal(expected, actual)
   end
 end
 
-require "node"
+require 'node'
 
 class TestView < Test::Unit::TestCase
   def setup
@@ -28,7 +28,7 @@ class TestView < Test::Unit::TestCase
   end
 
   def test_edit_node
-    node = Node.new("NodeName")
+    node = Node.new('NodeName')
     @view.edit_node(node)
     assert_equal("Editing Node: NodeName\n", @output.string)
   end

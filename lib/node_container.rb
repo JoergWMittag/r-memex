@@ -1,7 +1,7 @@
-require "set"
+require 'set'
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require "node"
+require 'node'
 
 class NodeContainer
   attr_reader :nodes, :relations
@@ -105,7 +105,7 @@ class NodeContainer
   end
 
   def to_s
-    str = ""
+    str = ''
     @nodes.each { |node| str += "Node:\n"+ node.to_s + "\n"}
     return str
   end

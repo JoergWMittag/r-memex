@@ -1,11 +1,11 @@
 begin require 'rubygems'; rescue LoadError
 else begin gem 'highline', '~> 1.4.0'; rescue Gem::LoadError; end end
-require "highline"
-require "pp"
+require 'highline'
+require 'pp'
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require "node_container"
-require "lastfm_generator"
+require 'node_container'
+require 'lastfm_generator'
 
 class Controller
   attr_reader :nc, :changed, :selected
@@ -50,7 +50,7 @@ class Controller
   end
 
   def tagstr_to_array(tagstring)
-    return tagstring.split(",").collect! {|token| token.strip}
+    return tagstring.split(',').collect! {|token| token.strip}
   end
 end
 
@@ -64,7 +64,7 @@ class View
 
   def menu_main
       @term.choose do |menu|
-        menu.prompt = "Choose a command:"
+        menu.prompt = 'Choose a command:'
         menu.layout = :one_line
         menu.choice(:file) do menu_file end
         menu.choice(:select) do menu_select end
@@ -78,7 +78,7 @@ class View
 
   def menu_select
     @term.choose do |menu|
-      menu.prompt = "Choose a Selection command:"
+      menu.prompt = 'Choose a Selection command:'
       menu.layout = :one_line
       menu.choice(:list) do
         @term.say(@ctrl.selected.to_s)
@@ -101,15 +101,15 @@ class View
 
   def menu_file
     @term.choose do |menu|
-      menu.prompt = "Choose a File command:"
+      menu.prompt = 'Choose a File command:'
       menu.layout = :one_line
       menu.choice(:new) do
         @ctrl.new_container
-        @term.say("new empty file")
+        @term.say('new empty file')
         menu_main
       end
       menu.choice(:load) do
-        @ctrl.load_container(@term.ask("Enter Filename: "))
+        @ctrl.load_container(@term.ask('Enter Filename: '))
         menu_main
       end
       menu.choice(:save) do
@@ -117,7 +117,7 @@ class View
         menu_main
       end
       menu.choice(:import) do
-        username = @term.ask("Enter LastFM Username: ")
+        username = @term.ask('Enter LastFM Username: ')
         @ctrl.import_container(username)
         menu_main
       end
@@ -127,20 +127,20 @@ class View
   end
 
   def save
-    @ctrl.save_container(@term.ask("Enter desired Filename: "))
+    @ctrl.save_container(@term.ask('Enter desired Filename: '))
   end
 
   def exit
     if @ctrl.changed
-        if @term.ask("file changed. do you wanna save it?")
+        if @term.ask('file changed. do you wanna save it?')
             save
         end
     end
-    @term.say("Bye bye...")
+    @term.say('Bye bye...')
   end
 
   def menu_edit(node)
-    @term.say("Editing Node: %s" % node.name)
+    @term.say('Editing Node: %s' % node.name)
     @term.chose do |menu|
       menu.layout = :one_line
       menu.choice(:name) do end
