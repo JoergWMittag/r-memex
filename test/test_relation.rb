@@ -11,7 +11,7 @@ class TestRelation < Test::Unit::TestCase
     assert_not_nil(relation)
     assert_equal("name", relation.name)
   end
-  
+
   def test_gleich?
     rel1 = Relation.new("Name")
     rel2 = Relation.new("Name")
@@ -20,9 +20,8 @@ class TestRelation < Test::Unit::TestCase
     assert(rel1.eql?(rel2), "Should be eql!")
     assert_not_equal(rel1, rel3)
     assert(!rel1.eql?(rel3), "Should not be eql!")
-
   end
-  
+
   def test_weight
     rel = Relation.new("name")
     assert_equal(rel.weight, 1.0)

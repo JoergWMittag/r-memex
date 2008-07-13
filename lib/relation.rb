@@ -7,15 +7,15 @@ class Relation
     @source = nil
     @dest = nil
   end
-  
+
   def ==(obj)
     name == obj.name
   end
-  
+
   def eql?(obj)
     name.eql?(obj.name)
   end
-  
+
   def weight
     if @weight
       return @weight
@@ -23,9 +23,8 @@ class Relation
       return 1.0
     end
   end
-  
+
   def weight=(weight)
     @weight = weight
   end
-
 end

@@ -4,12 +4,11 @@ require "ridiculous"
 include Ridiculous
 
 class DeliciousGenerator
-  
   def initialize(tag=nil)
     @tag = tag
     @post = Post.new
   end
-  
+
   def generate(node_container)
     posts = @post.all(:tag=>@tag)
     posts.each do |post|
@@ -18,5 +17,4 @@ class DeliciousGenerator
       node_container.add_node(post_node)
     end
   end
-  
 end

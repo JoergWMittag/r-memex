@@ -11,7 +11,7 @@ class TestNode < Test::Unit::TestCase
     assert_not_nil(node)
     assert_equal("NodeName", node.name)
   end
-  
+
   def test_gleich
     node1 = Node.new("Name")
     node2 = Node.new("Name")
@@ -30,14 +30,14 @@ class TestNode < Test::Unit::TestCase
     node2.add_tag("Test")
     assert_equal(node1, node2)
     assert(node1.eql?(node2), "Should be eql")
-    
+
     node1.location = "http://localhost/"
     assert_not_equal(node1, node2)
     assert(!node1.eql?(node2), "Should not be equal")
     node2.location = "http://localhost/"
     assert_equal(node1, node2)
     assert(node1.eql?(node2), "Should be eql")
-    
+
     node1.add_relation("Relation")
     assert_not_equal(node1, node2)
     assert(!node1.eql?(node2), "Should not be equal")
@@ -81,7 +81,7 @@ class TestNode < Test::Unit::TestCase
     assert_equal(true, node.includes_tag?(["Tag_Name_1"]))
     assert_equal(true, node.includes_tag?(%w[Tag_Name_1 Tag_Name_3]))
   end
-  
+
   def test_set_location_with_malformed_uri
     node = Node.new("NodeName")
     URI.expects(:parse).once.raises(URI::InvalidURIError)
@@ -91,21 +91,21 @@ class TestNode < Test::Unit::TestCase
     node.location="whatever"
     assert_equal("something", node.location)
   end
-  
+
   def test_set_description
     node = Node.new("NodeName")
     node.description="Description and more"
     assert_equal("Description and more", node.description)
     assert_not_equal("Unexpected", node.description)
   end
-  
+
   def test_add_relation
     node = Node.new("Node")
     rel = mock()
     node.add_relation(rel)
     assert_equal(Set.new([rel]), node.relations)
   end
-  
+
   def test_remove_relation
     node = Node.new("Node")
     rel = mock()
@@ -128,8 +128,7 @@ Creation Time: Thu Jan 01 01:00:00 +0100 1970
 Tags: Tag1, Tag2, Tag3
 END_OUTPUT
     assert_equal(str, node.to_s)
-    
-    
+
     node = Node.new("NodeName")
     node.creation_time = Time.at(0)
     node.location = "http://localhost/"
@@ -140,7 +139,5 @@ Creation Time: Thu Jan 01 01:00:00 +0100 1970
 Tags:
 END_OUTPUT
     assert_equal(str, node.to_s)
-    
-    
   end
 end

@@ -14,14 +14,14 @@ class TestNodeContainer < Test::Unit::TestCase
   alias_method :teardown, :setup
 
   def test_initialisation
-      assert_not_nil(NodeContainer.new)
+    assert_not_nil(NodeContainer.new)
   end
 
   def test_gleich
     nc1 = NodeContainer.new
     nc2 = NodeContainer.new
     assert_equal(nc1, nc2)
-    
+
     node1 = Node.new("node")
     node2 = Node.new("node")
     assert_equal(node1, node2)
@@ -29,7 +29,7 @@ class TestNodeContainer < Test::Unit::TestCase
     nc1.add_node(node1)
     nc2.add_node(node2)
     assert_equal(nc1, nc2)
-    
+
     rel1 = Relation.new("relation")
     rel2 = Relation.new("relation")
     assert_equal(rel1, rel1)
@@ -37,11 +37,10 @@ class TestNodeContainer < Test::Unit::TestCase
     nc1.add_relation(rel1, node1, node1)
     nc2.add_relation(rel2, node2, node2)
     assert_equal(rel1, rel2)
-    
+
     assert_equal(node1, node2)
-    
+
     assert_equal(nc1, nc2)
-    
   end
 
   def test_save
@@ -55,7 +54,7 @@ class TestNodeContainer < Test::Unit::TestCase
     file.close
     assert_equal(nc1, nc2)
   end
-  
+
   def test_load
     nc1 = NodeContainer.new
     node = Node.new("some node name")
@@ -80,7 +79,7 @@ class TestNodeContainer < Test::Unit::TestCase
     node1 = Node.new("node1")
     nc1.add_node(node1)
     assert_equal(Set.new([node1]), nc1.nodes)
-    
+
     nc2 = NodeContainer.new
     nc2.add_node("node1")
     assert_equal(nc1, nc2)
@@ -92,7 +91,7 @@ class TestNodeContainer < Test::Unit::TestCase
     node1 = mock()
     node2 = mock()
     rel12 = mock()
-    
+
     node1.expects(:add_relation).once.with(rel12)
     node2.expects(:add_relation).once.with(rel12)
     rel12.expects(:source=).with(node1)
@@ -101,8 +100,7 @@ class TestNodeContainer < Test::Unit::TestCase
     nc.add_node(node1)
     nc.add_node(node2)
     nc.add_relation(rel12, node1, node2)
-    
-    
+
     node1.expects(:relations).once.returns(Set.new([rel12]))
     rel12.expects(:source).once.returns(node1)
     rel12.expects(:dest).once.returns(node2)
@@ -162,7 +160,7 @@ class TestNodeContainer < Test::Unit::TestCase
     node1 = mock()
     node2 = mock()
     rel12 = mock()
-    
+
     node1.expects(:add_relation).once.with(rel12)
     node2.expects(:add_relation).once.with(rel12)
     rel12.expects(:source=).with(node1)
@@ -198,7 +196,7 @@ class TestNodeContainer < Test::Unit::TestCase
     assert_equal(Array.new([node2]), nc.nodes_by_tag("tag_b"))
     assert_equal(Array.new([node1, node4]), nc.nodes_by_tag("tag_a"))
   end
-  
+
   def test_node_by_name
     nc = NodeContainer.new
     node1 = Node.new("a")
@@ -220,13 +218,13 @@ class TestNodeContainer < Test::Unit::TestCase
     rel1.expects(:source=).once
     rel1.expects(:dest=).once
     node1.expects(:add_relation).at_least_once.with(rel1)
-    
+
     node2 = mock()
     rel2 = mock()
     rel2.expects(:source=).once
     rel2.expects(:dest=).once
     node2.expects(:add_relation).at_least_once.with(rel2)
-    
+
     nc1.add_node(node1)
     nc1.add_node(node2)
     nc1.add_relation(rel1, node1, node1)
@@ -238,13 +236,13 @@ class TestNodeContainer < Test::Unit::TestCase
     rel3.expects(:source=).once
     rel3.expects(:dest=).once
     node3.expects(:add_relation).at_least_once.with(rel3)
-    
+
     node4 = mock()
     rel4 = mock()
     rel4.expects(:source=).once
     rel4.expects(:dest=).once
     node4.expects(:add_relation).at_least_once.with(rel4)
-    
+
     nc2.add_node(node3)
     nc2.add_node(node4)
     nc2.add_relation(rel3, node3, node3)
@@ -262,22 +260,21 @@ class TestNodeContainer < Test::Unit::TestCase
     assert_equal(nodes, nc1.nodes)
     assert_equal(relations, nc1.relations)
   end
-  
+
   def test_to_s
     node = mock()
     node.expects(:to_s).returns("Return String 1")
-    
+
     nc = NodeContainer.new
     nc.add_node(node)
-    
+
     str = <<END_OUTPUT
 Node:
 Return String 1
 END_OUTPUT
-
     assert_equal(str, nc.to_s)
   end
-  
+
   private
 
   def init_tags
@@ -292,5 +289,4 @@ END_OUTPUT
     nc.add_node(node2)
     return nc
   end
-
 end

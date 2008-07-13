@@ -3,7 +3,6 @@ require "set"
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "node"
 
-
 class NodeContainer
   attr_reader :nodes, :relations
 
@@ -11,17 +10,17 @@ class NodeContainer
     @nodes = Set.new
     @relations = Set.new
   end
-  
+
   def ==(obj)
     obj.nodes.sort == nodes.sort \
       && obj.relations.sort == relations.sort
   end
-  
+
   def eql?(obj)
     obj.nodes.sort.eql?(nodes.sort) \
      && obj.relations.sort.eql?(relations.sort)
   end
-  
+
   def generate_using(builder)
     builder.generate(self)
   end
@@ -31,7 +30,7 @@ class NodeContainer
     Marshal.dump(self, file)
     file.close
   end
-  
+
   def self.load(location)
     file = File.new(location, 'r')
     return Marshal.load(file)
@@ -95,7 +94,7 @@ class NodeContainer
   def nodes_by_tag(tag)
     return @nodes.select {|node| node.includes_tag?(tag)}
   end
-  
+
   def nodes_by_name(name)
     return @nodes.select {|node| node.name.eql?(name)}
   end
