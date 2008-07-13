@@ -64,10 +64,12 @@ class Node
   end
 
   def to_s
-    str = "Name: #{@name}\n"
-    str << "Location: #{@location}\n"
-    str << "Creation Time: #{@creation_time}\n"
-    str << 'Tags:'
+    str = <<-HERE.chomp!
+Name: #{@name}
+Location: #{@location}
+Creation Time: #{@creation_time}
+Tags:
+    HERE
     @tags.each { |tag| str << " #{tag},"}
     if @tags.size > 0
       str.chop!

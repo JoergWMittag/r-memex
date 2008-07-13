@@ -121,23 +121,23 @@ class TestNode < Test::Unit::TestCase
     node.add_tag('Tag1')
     node.add_tag('Tag2')
     node.add_tag('Tag3')
-    str = <<'END_OUTPUT'
+    str = <<-'END_OUTPUT'
 Name: NodeName
 Location: http://localhost/
 Creation Time: Thu Jan 01 01:00:00 +0100 1970
 Tags: Tag1, Tag2, Tag3
-END_OUTPUT
+    END_OUTPUT
     assert_equal(str, node.to_s)
 
     node = Node.new('NodeName')
     node.creation_time = Time.at(0)
     node.location = 'http://localhost/'
-    str = <<'END_OUTPUT'
+    str = <<-'END_OUTPUT'
 Name: NodeName
 Location: http://localhost/
 Creation Time: Thu Jan 01 01:00:00 +0100 1970
 Tags:
-END_OUTPUT
+    END_OUTPUT
     assert_equal(str, node.to_s)
   end
 end
