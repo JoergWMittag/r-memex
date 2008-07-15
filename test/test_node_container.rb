@@ -20,27 +20,27 @@ class TestNodeContainer < Test::Unit::TestCase
   def test_equality
     nc1 = NodeContainer.new
     nc2 = NodeContainer.new
-    assert_equal(nc1, nc2)
+    assert(nc1 == nc2, 'Should be ==')
 
     node1 = Node.new('node')
     node2 = Node.new('node')
-    assert_equal(node1, node2)
+    assert(node1 == node2, 'Should be ==')
 
     nc1.add_node(node1)
     nc2.add_node(node2)
-    assert_equal(nc1, nc2)
+    assert(nc1 == nc2, 'Should be ==')
 
     rel1 = Relation.new('relation')
     rel2 = Relation.new('relation')
-    assert_equal(rel1, rel1)
+    assert(rel1 == rel2, 'Should be ==')
 
     nc1.add_relation(rel1, node1, node1)
     nc2.add_relation(rel2, node2, node2)
-    assert_equal(rel1, rel2)
+    assert(rel1 == rel2, 'Should be ==')
 
-    assert_equal(node1, node2)
+    assert(node1 == node2, 'Should be ==')
 
-    assert_equal(nc1, nc2)
+    assert(nc1 == nc2, 'Should be ==')
   end
 
   def test_save
@@ -79,13 +79,13 @@ class TestNodeContainer < Test::Unit::TestCase
     nc2 = NodeContainer.new
     nc2.add_node('node1')
     assert_equal(nc1, nc2)
-    assert_equal(nc2.nodes.sort, Set[node1].sort)
+    assert_equal(Set[node1].sort, nc2.nodes.sort)
   end
 
   def test_remove_node
     nc = NodeContainer.new
-    node1, node2 = mock(), mock()
-    rel12 = mock()
+    node1, node2 = mock('Node 1'), mock('Node 2')
+    rel12 = mock('Relation Node 1 -> Node 2')
 
     node1.expects(:add_relation).once.with(rel12)
     node2.expects(:add_relation).once.with(rel12)
@@ -111,8 +111,8 @@ class TestNodeContainer < Test::Unit::TestCase
 
   def test_frequency_single
     nc = init_tags
-    assert_equal(nc.absolute_frequency('Tag1'), 2)
-    assert_equal(nc.absolute_frequency('Tag2'), 1)
+    assert_equal(2, nc.absolute_frequency('Tag1'))
+    assert_equal(1, nc.absolute_frequency('Tag2'))
     assert_not_equal(1, nc.absolute_frequency('Tag4'))
   end
 
@@ -127,23 +127,23 @@ class TestNodeContainer < Test::Unit::TestCase
   end
 
   def test_add_relation
-    mc1 = NodeContainer.new
+    nc = NodeContainer.new
     node1 = Node.new('name1')
     node2 = Node.new('name2')
-    mc1.add_node(node1)
-    mc1.add_node(node2)
+    nc.add_node(node1)
+    nc.add_node(node2)
     rel1 = Relation.new('rel_name1')
     rel2 = Relation.new('rel_name2')
-    mc1.add_relation(rel1, node1, node1)
-    assert_equal(mc1.relations, Set[rel1])
-    mc1.add_relation(rel2, node2, node2)
-    assert_equal(mc1.relations, Set[rel1, rel2])
+    nc.add_relation(rel1, node1, node1)
+    assert_equal(Set[rel1], nc.relations)
+    nc.add_relation(rel2, node2, node2)
+    assert_equal(Set[rel1, rel2], nc.relations)
   end
 
   def test_remove_relation
     nc = NodeContainer.new
-    node1, node2 = mock(), mock()
-    rel12 = mock()
+    node1, node2 = mock('Node 1'), mock('Node 2')
+    rel12 = mock('Relation Node 1 -> Node 2')
 
     node1.expects(:add_relation).once.with(rel12)
     node2.expects(:add_relation).once.with(rel12)
@@ -197,14 +197,14 @@ class TestNodeContainer < Test::Unit::TestCase
 
   def test_merge
     nc1 = NodeContainer.new
-    node1 = mock()
-    rel1 = mock()
+    node1 = mock('Node 1')
+    rel1 = mock('Relation 1')
     rel1.expects(:source=).once
     rel1.expects(:dest=).once
     node1.expects(:add_relation).at_least_once.with(rel1)
 
-    node2 = mock()
-    rel2 = mock()
+    node2 = mock('Node 2')
+    rel2 = mock('Relation 2')
     rel2.expects(:source=).once
     rel2.expects(:dest=).once
     node2.expects(:add_relation).at_least_once.with(rel2)
@@ -215,14 +215,14 @@ class TestNodeContainer < Test::Unit::TestCase
     nc1.add_relation(rel2, node2, node2)
 
     nc2 = NodeContainer.new
-    node3 = mock()
-    rel3 = mock()
+    node3 = mock('Node 3')
+    rel3 = mock('Relation 3')
     rel3.expects(:source=).once
     rel3.expects(:dest=).once
     node3.expects(:add_relation).at_least_once.with(rel3)
 
-    node4 = mock()
-    rel4 = mock()
+    node4 = mock('Node 4')
+    rel4 = mock('Relation 4')
     rel4.expects(:source=).once
     rel4.expects(:dest=).once
     node4.expects(:add_relation).at_least_once.with(rel4)
@@ -240,7 +240,7 @@ class TestNodeContainer < Test::Unit::TestCase
   end
 
   def test_to_s
-    (node = mock).expects(:to_s).returns('Return String 1')
+    (node = mock('Node')).expects(:to_s).returns('Return String 1')
 
     nc = NodeContainer.new
     nc.add_node(node)

@@ -15,34 +15,34 @@ class TestNode < Test::Unit::TestCase
   def test_equality
     node1 = Node.new('Name')
     node2 = Node.new('Name')
-    assert_equal(node1, node2)
+    assert(node1 == node2, 'Should be ==')
     assert(node1.eql?(node2), 'Should be eql')
 
     node1.name = 'Other'
-    assert_not_equal(node1, node2)
+    assert(!(node1 == node2), 'Should *not* be ==')
     assert(!node1.eql?(node2), 'Should not be equal')
     node1.name = 'Name'
-    assert_equal(node1, node2)
+    assert(node1 == node2, 'Should be ==')
     assert(node1.eql?(node2), 'Should be eql')
     node1.add_tag('Test')
-    assert_not_equal(node1, node2)
+    assert(!(node1 == node2), 'Should *not* be ==')
     assert(!node1.eql?(node2), 'Should not be equal')
     node2.add_tag('Test')
-    assert_equal(node1, node2)
+    assert(node1 == node2, 'Should be ==')
     assert(node1.eql?(node2), 'Should be eql')
 
     node1.location = 'http://localhost/'
-    assert_not_equal(node1, node2)
+    assert(!(node1 == node2), 'Should *not* be ==')
     assert(!node1.eql?(node2), 'Should not be equal')
     node2.location = 'http://localhost/'
-    assert_equal(node1, node2)
+    assert(node1 == node2, 'Should be ==')
     assert(node1.eql?(node2), 'Should be eql')
 
     node1.add_relation('Relation')
-    assert_not_equal(node1, node2)
+    assert(!(node1 == node2), 'Should *not* be ==')
     assert(!node1.eql?(node2), 'Should not be equal')
     node2.add_relation('Relation')
-    assert_equal(node1, node2)
+    assert(node1 == node2, 'Should be ==')
     assert(node1.eql?(node2), 'Should be eql')
   end
 
@@ -50,8 +50,15 @@ class TestNode < Test::Unit::TestCase
     node1 = Node.new('name1')
     node2 = Node.new('name2')
     node3 = Node.new('name3')
-    assert(node1 < node2, 'node1 should be smaller')
-    assert(node2 > node1, 'node1 should be smaller')
+    node4 = Node.new('name3')
+    assert_operator(node1, :<, node2, 'node1 should be less than node2')
+    assert_operator(node1, :<, node3, 'node1 should be less than node3')
+    assert_operator(node2, :<, node3, 'node2 should be less than node3')
+    assert_operator(node2, :>, node1, 'node2 should be greater than node1')
+    assert_operator(node3, :>, node1, 'node3 should be greater than node1')
+    assert_operator(node3, :>, node2, 'node3 should be greater than node2')
+    assert_operator(node3, :<=, node4, 'node3 should be less than or equal to node4')
+    assert_operator(node3, :>=, node4, 'node3 should be greater than or equal to node4')
     assert(node2.between?(node1, node3), 'Should be between')
   end
 
@@ -76,10 +83,10 @@ class TestNode < Test::Unit::TestCase
     node = Node.new('NodeName')
     node.add_tag('Tag_Name_1')
     node.add_tag('Tag_Name_3')
-    assert_equal(true, node.includes_tag?('Tag_Name_1'))
-    assert_equal(false, node.includes_tag?('Tag_Name_2'))
-    assert_equal(true, node.includes_tag?(['Tag_Name_1']))
-    assert_equal(true, node.includes_tag?(%w[Tag_Name_1 Tag_Name_3]))
+    assert(node.includes_tag?('Tag_Name_1'))
+    assert(!node.includes_tag?('Tag_Name_2'))
+    assert(node.includes_tag?(['Tag_Name_1']))
+    assert(node.includes_tag?(%w[Tag_Name_1 Tag_Name_3]))
   end
 
   def test_set_location_with_malformed_uri
@@ -101,17 +108,18 @@ class TestNode < Test::Unit::TestCase
 
   def test_add_relation
     node = Node.new('Node')
-    node.add_relation(rel = mock)
-    assert_equal(Set[rel], node.relations)
+    node.add_relation(:foo)
+    assert_equal(Set[:foo], node.relations)
   end
 
   def test_remove_relation
     node = Node.new('Node')
-    node.add_relation(rel = mock)
-    node.remove_relation(rel)
+    node.add_relation(:foo)
+    node.remove_relation(:foo)
     assert_equal(Set[], node.relations)
   end
 
+  #FIXME: Test is locale dependent, breaks e.g. in German locale ("Do" instead of "Thu")
   def test_to_s
     node = Node.new('NodeName')
     node.creation_time = Time.at(0)

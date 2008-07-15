@@ -9,6 +9,7 @@ require 'scrobbler'
 
 class TestLastfmGenerator < Test::Unit::TestCase
   def test_initialize
+    assert_raise(ArgumentError) { LastfmGenerator.new }
     assert_raise(ArgumentError) { LastfmGenerator.new(nil) }
     assert_not_nil(LastfmGenerator.new('tcb787'))
   end
