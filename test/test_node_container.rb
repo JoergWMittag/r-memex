@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'stringio'
+
 require File.join(File.dirname(__FILE__), 'test_helper')
 require 'set_extensions'
 
@@ -7,12 +9,6 @@ require 'node_container'
 require 'relation'
 
 class TestNodeContainer < Test::Unit::TestCase
-  def setup
-    File.delete('some.name', 'other.file')
-  rescue Errno::ENOENT; end
-
-  alias_method :teardown, :setup
-
   def test_initialize
     assert_not_nil(NodeContainer.new)
   end
@@ -48,8 +44,12 @@ class TestNodeContainer < Test::Unit::TestCase
     node = Node.new('test_node')
     nc1.add_node(node)
     nc1.add_relation(Relation.new('some name'), node, node)
-    nc1.save('some.name')
-    nc2 = Marshal.load(File.read('some.name'))
+
+    File.stubs(:open).yields(fake_file = StringIO.open('', 'r+b'))
+
+    nc1.save('some.name'); fake_file.pos = 0
+    nc2 = Marshal.load(fake_file)
+
     assert_equal(nc1, nc2)
   end
 
@@ -58,9 +58,9 @@ class TestNodeContainer < Test::Unit::TestCase
     node = Node.new('some node name')
     nc1.add_node(node)
     nc1.add_relation(Relation.new('some relation name'), node, node)
-    File.open('other.file', 'w+b') do |file|
-      Marshal.dump(nc1, file)
-    end
+
+    File.stubs(:read).returns(Marshal.dump(nc1))
+
     nc2 = NodeContainer.load('other.file')
     assert_equal(nc1, nc2)
   end
