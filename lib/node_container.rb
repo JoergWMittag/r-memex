@@ -66,23 +66,18 @@ class NodeContainer
   end
 
   def list_tags
-    tags = Set.new
-    @nodes.collect { |item| tags.merge(item.tags) }
-    return tags
+    return @nodes.inject(Set[]) { |tags, item| tags.merge(item.tags) }
   end
 
   def absolute_frequency(tag)
-    freq = 0
-    @nodes.collect { |node| freq += 1 if node.includes_tag?(tag) }
-    return freq
+    return @nodes.select { |node| node.tags.include?(tag) }.size
   end
 
   def absolute_frequencies
-    freq = Hash.new(0)
-    @nodes.collect do |node|
+    return @nodes.inject(Hash.new(0)) do |freq, node|
       node.tags.each { |tag| freq[tag] += 1 }
+      freq
     end
-    return freq
   end
 
   def relative_frequencies
@@ -104,8 +99,6 @@ class NodeContainer
   end
 
   def to_s
-    str = ''
-    @nodes.each { |node| str << "Node:\n#{node}\n"}
-    return str
+    return @nodes.inject('') { |str, node| str << "Node:\n#{node}\n"}
   end
 end

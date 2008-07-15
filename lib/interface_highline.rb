@@ -42,7 +42,7 @@ class Controller
   end
 
   def add_tag(nodename, tagname)
-    @nc.nodes_by_name(nodename).collect {|node| node.add_tag(tagname)}
+    @nc.nodes_by_name(nodename).each {|node| node.add_tag(tagname)}
   end
 
   def select_by_tags(tags)

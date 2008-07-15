@@ -17,8 +17,7 @@ class TestLastfmGenerator < Test::Unit::TestCase
     generator = LastfmGenerator.new('tcb787')
     nodecontainer = NodeContainer.new
     generator.generate(nodecontainer)
-    online_friends = Array.new
-    nodecontainer.nodes.each { |node| online_friends.push(node.name) }
+    online_friends = nodecontainer.nodes.inject([]) { |friends, node| friends << node.name }
     actual_friends = %w[tcb787 OwlsToAthens amawbb berlin_alex klettermaster t-i-g-g-e-r Tornappart sankatze bitalias jaeddae pricelessperson wedgin SuziSonne analbina sariti littlewing_ Doml greenwonderland]
     assert_equal(actual_friends.sort, online_friends.sort)
   end
