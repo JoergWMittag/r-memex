@@ -27,9 +27,4 @@ class TestView < Test::Unit::TestCase
     @view.term = @terminal
   end
 
-  def test_edit_node
-    node = Node.new('NodeName')
-    @view.edit_node(node)
-    assert_equal("Editing Node: NodeName\n", @output.string)
-  end
 end
