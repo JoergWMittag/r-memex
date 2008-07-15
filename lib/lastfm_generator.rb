@@ -6,7 +6,7 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'node_container'
 require 'relation'
 
-class LastFMGenerator
+class LastfmGenerator
   def initialize(username)
     @user = Scrobbler::User.new(username)
   end

@@ -7,14 +7,14 @@ require 'node_container'
 begin gem 'scrobbler', '~> 0.1.1'; rescue Gem::LoadError; end
 require 'scrobbler'
 
-class TestLastFMGenerator < Test::Unit::TestCase
+class TestLastfmGenerator < Test::Unit::TestCase
   def test_init
-    assert_raise(ArgumentError) { LastFMGenerator.new(nil) }
-    assert_not_nil(LastFMGenerator.new('tcb787'))
+    assert_raise(ArgumentError) { LastfmGenerator.new(nil) }
+    assert_not_nil(LastfmGenerator.new('tcb787'))
   end
 
   def test_generate
-    generator = LastFMGenerator.new('tcb787')
+    generator = LastfmGenerator.new('tcb787')
     nodecontainer = NodeContainer.new
     generator.generate(nodecontainer)
     online_friends = Array.new
