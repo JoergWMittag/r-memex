@@ -5,7 +5,8 @@ require 'set_extensions'
 class Node
   include Comparable
 
-  attr_accessor :name, :creation_time
+  attr_accessor :name
+  attr_writer :creation_time
   attr_reader :relations, :tags, :location, :description
 
   def initialize(name)

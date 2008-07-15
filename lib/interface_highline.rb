@@ -9,7 +9,6 @@ require 'lastfm_generator'
 
 class Controller
   attr_reader :nc, :changed, :selected
-  attr_writer :changed, :selected
 
   def initialize
     @nc = NodeContainer.new
