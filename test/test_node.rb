@@ -87,6 +87,7 @@ class TestNode < Test::Unit::TestCase
     assert(!node.includes_tag?('Tag_Name_2'))
     assert(node.includes_tag?(['Tag_Name_1']))
     assert(node.includes_tag?(%w[Tag_Name_1 Tag_Name_3]))
+    assert(node.includes_tag?('Tag_Name_1', 'Tag_Name_3'))
   end
 
   def test_set_location_with_malformed_uri

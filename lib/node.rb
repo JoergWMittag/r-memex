@@ -50,12 +50,8 @@ class Node
     @tags.delete(tag)
   end
 
-  def includes_tag?(tag_or_tags)
-    if tag_or_tags.instance_of?(Array)
-      return tag_or_tags.all? {|tag| @tags.include?(tag)}
-    else
-      return @tags.include?(tag_or_tags)
-    end
+  def includes_tag?(*tag_or_tags)
+    return tag_or_tags.flatten.all? {|tag| @tags.include?(tag)}
   end
 
   def add_relation(rel)
