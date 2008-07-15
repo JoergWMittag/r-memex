@@ -14,12 +14,12 @@ class TestSetExtensions < Test::Unit::TestCase
   end
 
   def test_join_without_seperator
-    assert_equal 'abc', @set.join
-    assert_equal 'abc', @set.join(nil)
+    assert_match(/[abc]{3}/, @set.join)
+    assert_match(/[abc]{3}/, @set.join(nil))
   end
 
   def test_join_with_seperator
-    assert_equal 'a, b, c', @set.join(', ')
+    assert_match(/[abc], [abc], [abc]/, @set.join(', '))
   end
 
   def test_join_with_default_seperator
@@ -27,9 +27,10 @@ class TestSetExtensions < Test::Unit::TestCase
     $, = 'TEST'
     assert_equal '', Set[].join
     assert_equal '', Set[].join(', ')
-    assert_equal 'aTESTbTESTc', @set.join
-    assert_equal 'aTESTbTESTc', @set.join(nil)
-    assert_equal 'a, b, c', @set.join(', ')
+    assert_match(/[abc]TEST[abc]TEST[abc]/, @set.join)
+    # Array#join with nil is unspecified. Copy this (non-)behaviour for our Set#join.
+    #assert_match(/[abc]TEST[abc]TEST[abc]/, @set.join(nil))
+    assert_match(/[abc], [abc], [abc]/, @set.join(', '))
     $, = old_seperator
   end
 end
