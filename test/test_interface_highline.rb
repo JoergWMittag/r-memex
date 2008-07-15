@@ -18,13 +18,13 @@ end
 
 require 'node'
 
-class TestView < Test::Unit::TestCase
-  def setup
-    @input    = StringIO.new
-    @output   = StringIO.new
-    @terminal = HighLine.new(@input, @output)
-    @view = View.new
-    @view.term = @terminal
-  end
-
-end
+# class TestView < Test::Unit::TestCase
+#   def setup
+#     @input    = StringIO.new
+#     @output   = StringIO.new
+#     @terminal = HighLine.new(@input, @output)
+#     @view = View.new
+#     @view.term = @terminal
+#   end
+# 
+# end
