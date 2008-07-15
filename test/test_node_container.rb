@@ -178,7 +178,7 @@ class TestNodeContainer < Test::Unit::TestCase
     node4.add_tag('tag_d')
     node4.add_tag('tag_a')
     assert_equal([node2], nc.nodes_by_tag('tag_b'))
-    assert_equal([node1, node4], nc.nodes_by_tag('tag_a'))
+    assert_equal([node1, node4], nc.nodes_by_tag('tag_a').sort)
   end
 
   def test_node_by_name
