@@ -49,9 +49,7 @@ class TestNodeContainer < Test::Unit::TestCase
     nc1.add_node(node)
     nc1.add_relation(Relation.new('some name'), node, node)
     nc1.save('some.name')
-    file = File.new('some.name', 'r')
-    nc2 = Marshal.load(file)
-    file.close
+    nc2 = Marshal.load(File.read('some.name'))
     assert_equal(nc1, nc2)
   end
 
@@ -60,9 +58,9 @@ class TestNodeContainer < Test::Unit::TestCase
     node = Node.new('some node name')
     nc1.add_node(node)
     nc1.add_relation(Relation.new('some relation name'), node, node)
-    file = File.new('other.file', 'w')
-    Marshal.dump(nc1, file)
-    file.close
+    File.open('other.file', 'w+b') do |file|
+      Marshal.dump(nc1, file)
+    end
     nc2 = NodeContainer.load('other.file')
     assert_equal(nc1, nc2)
   end

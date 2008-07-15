@@ -25,14 +25,13 @@ class NodeContainer
   end
 
   def save(location)
-    file = File.new(location, 'w')
-    Marshal.dump(self, file)
-    file.close
+    File.open(location, 'w+b') do |file|
+      Marshal.dump(self, file)
+    end
   end
 
   def self.load(location)
-    file = File.new(location, 'r')
-    return Marshal.load(file)
+    Marshal.load(File.read(location))
   end
 
   def add_relation(rel, source, dest)
