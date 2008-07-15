@@ -10,7 +10,6 @@ class Node
 
   def initialize(name)
     @name = name
-    @location = nil
     @creation_time = Time.now
     @tags = Set[]
     @relations = Set[]

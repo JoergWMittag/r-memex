@@ -4,8 +4,6 @@ class Relation
 
   def initialize(name)
     @name = name
-    @source = nil
-    @dest = nil
   end
 
   def ==(obj)

@@ -13,7 +13,6 @@ class Controller
 
   def initialize
     @nc = NodeContainer.new
-    @changed = false
     @selected = []
   end
 
