@@ -12,13 +12,13 @@ class NodeContainer
   end
 
   def ==(obj)
-    obj.nodes.sort == nodes.sort \
-      && obj.relations.sort == relations.sort
+    obj.nodes.sort == nodes.sort &&
+      obj.relations.sort == relations.sort
   end
 
   def eql?(obj)
-    obj.nodes.sort.eql?(nodes.sort) \
-     && obj.relations.sort.eql?(relations.sort)
+    obj.nodes.sort.eql?(nodes.sort) &&
+      obj.relations.sort.eql?(relations.sort)
   end
 
   def generate_using(builder)
