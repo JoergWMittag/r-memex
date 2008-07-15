@@ -6,12 +6,12 @@ require 'relation'
 require 'node'
 
 class TestRelation < Test::Unit::TestCase
-  def test_initialisation
+  def test_initialize
     assert_not_nil(relation = Relation.new('name'))
     assert_equal('name', relation.name)
   end
 
-  def test_gleich?
+  def test_equality
     rel1 = Relation.new('Name')
     rel2 = Relation.new('Name')
     rel3 = Relation.new('Other')

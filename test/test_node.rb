@@ -6,13 +6,13 @@ require 'set_extensions'
 require 'node'
 
 class TestNode < Test::Unit::TestCase
-  def test_initialisation
+  def test_initialize
     node = Node.new('NodeName')
     assert_not_nil(node)
     assert_equal('NodeName', node.name)
   end
 
-  def test_gleich
+  def test_equality
     node1 = Node.new('Name')
     node2 = Node.new('Name')
     assert_equal(node1, node2)
@@ -46,7 +46,7 @@ class TestNode < Test::Unit::TestCase
     assert(node1.eql?(node2), 'Should be eql')
   end
 
-  def test_comp
+  def test_comparison
     node1 = Node.new('name1')
     node2 = Node.new('name2')
     node3 = Node.new('name3')

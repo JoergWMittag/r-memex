@@ -13,11 +13,11 @@ class TestNodeContainer < Test::Unit::TestCase
 
   alias_method :teardown, :setup
 
-  def test_initialisation
+  def test_initialize
     assert_not_nil(NodeContainer.new)
   end
 
-  def test_gleich
+  def test_equality
     nc1 = NodeContainer.new
     nc2 = NodeContainer.new
     assert_equal(nc1, nc2)

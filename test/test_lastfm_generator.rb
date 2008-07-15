@@ -8,7 +8,7 @@ begin gem 'scrobbler', '~> 0.1.1'; rescue Gem::LoadError; end
 require 'scrobbler'
 
 class TestLastfmGenerator < Test::Unit::TestCase
-  def test_init
+  def test_initialize
     assert_raise(ArgumentError) { LastfmGenerator.new(nil) }
     assert_not_nil(LastfmGenerator.new('tcb787'))
   end
