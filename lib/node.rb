@@ -1,5 +1,6 @@
-require 'set'
 require 'uri'
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'set_extensions'
 
 class Node
   include Comparable
@@ -66,17 +67,11 @@ class Node
   end
 
   def to_s
-    str = <<-HERE.chomp!
+    return <<-HERE
 Name: #{@name}
 Location: #{@location}
 Creation Time: #{@creation_time}
-Tags:
+Tags:#{@tags.length > 0 ? ' ' << @tags.join(', ') : nil}
     HERE
-    @tags.each { |tag| str << " #{tag},"}
-    if @tags.size > 0
-      str.chop!
-    end
-    str << "\n"
-    return str
   end
 end

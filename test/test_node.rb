@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require File.join(File.dirname(__FILE__), 'test_helper')
-require 'set'
+require 'set_extensions'
 
 require 'node'
 
