@@ -11,17 +11,16 @@ class TestLastfmGenerator < Test::Unit::TestCase
   def test_initialize
     assert_raise(ArgumentError) { LastfmGenerator.new }
     assert_raise(ArgumentError) { LastfmGenerator.new(nil) }
-    assert_not_nil(LastfmGenerator.new('tcb787'))
+    assert_not_nil(LastfmGenerator.new('foo'))
   end
 
   def test_generate
-    generator = LastfmGenerator.new('tcb787')
+    friends = %w[friend_a friend_b friend_c].collect { |c| stub(c, :username => c) }
+    Scrobbler::User.stubs(:new).returns(stub('Scrobbler Stub', :username => 'username', :friends => friends))
     nodecontainer = NodeContainer.new
-    generator.generate(nodecontainer)
-    online_friends = nodecontainer.nodes.inject([]) { |friends, node| friends << node.name }
-    actual_friends = %w[tcb787 OwlsToAthens amawbb berlin_alex klettermaster t-i-g-g-e-r Tornappart sankatze bitalias jaeddae pricelessperson wedgin SuziSonne analbina sariti littlewing_ Doml greenwonderland]
-    assert_equal(actual_friends.sort, online_friends.sort)
-  end
+    LastfmGenerator.new('login_name').generate nodecontainer
+    online_friends = nodecontainer.nodes.collect { |node| node.name }
 
-  def test_generate_new; end
+    assert_equal(%w[friend_a friend_b friend_c username], online_friends.sort)
+  end
 end
