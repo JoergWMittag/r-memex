@@ -7,8 +7,7 @@ require 'node'
 
 class TestRelation < Test::Unit::TestCase
   def test_initialisation
-    relation = Relation.new('name')
-    assert_not_nil(relation)
+    assert_not_nil(relation = Relation.new('name'))
     assert_equal('name', relation.name)
   end
 

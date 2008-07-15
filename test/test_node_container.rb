@@ -68,9 +68,7 @@ class TestNodeContainer < Test::Unit::TestCase
   end
 
   def test_generate_using
-    nc = NodeContainer.new
-    builder = mock()
-    builder.expects(:generate).once.with(nc)
+    (builder = mock).expects(:generate).once.with(nc = NodeContainer.new)
     nc.generate_using(builder)
   end
 
@@ -88,8 +86,7 @@ class TestNodeContainer < Test::Unit::TestCase
 
   def test_remove_node
     nc = NodeContainer.new
-    node1 = mock()
-    node2 = mock()
+    node1, node2 = mock(), mock()
     rel12 = mock()
 
     node1.expects(:add_relation).once.with(rel12)
@@ -111,9 +108,7 @@ class TestNodeContainer < Test::Unit::TestCase
   end
 
   def test_list_tags
-    nc = init_tags
-    tagset = Set.new(%w[Tag1 Tag2 Tag3])
-    assert_equal(tagset, nc.list_tags)
+    assert_equal(Set.new(%w[Tag1 Tag2 Tag3]), init_tags.list_tags)
   end
 
   def test_frequency_single
@@ -157,8 +152,7 @@ class TestNodeContainer < Test::Unit::TestCase
 
   def test_remove_relation
     nc = NodeContainer.new
-    node1 = mock()
-    node2 = mock()
+    node1, node2 = mock(), mock()
     rel12 = mock()
 
     node1.expects(:add_relation).once.with(rel12)
@@ -248,22 +242,15 @@ class TestNodeContainer < Test::Unit::TestCase
     nc2.add_relation(rel3, node3, node3)
     nc2.add_relation(rel4, node4, node4)
 
-    nodes = Set.new
-    nodes.merge(nc1.nodes)
-    nodes.merge(nc2.nodes)
-
-    relations = Set.new()
-    relations.merge(nc1.relations)
-    relations.merge(nc2.relations)
-
+    nodes = nc1.nodes.merge(nc2.nodes)
+    relations = nc1.relations.merge(nc2.relations)
     nc1.merge(nc2)
     assert_equal(nodes, nc1.nodes)
     assert_equal(relations, nc1.relations)
   end
 
   def test_to_s
-    node = mock()
-    node.expects(:to_s).returns('Return String 1')
+    (node = mock).expects(:to_s).returns('Return String 1')
 
     nc = NodeContainer.new
     nc.add_node(node)

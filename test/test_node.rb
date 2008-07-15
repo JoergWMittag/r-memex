@@ -101,15 +101,13 @@ class TestNode < Test::Unit::TestCase
 
   def test_add_relation
     node = Node.new('Node')
-    rel = mock()
-    node.add_relation(rel)
+    node.add_relation(rel = mock)
     assert_equal(Set.new([rel]), node.relations)
   end
 
   def test_remove_relation
     node = Node.new('Node')
-    rel = mock()
-    node.add_relation(rel)
+    node.add_relation(rel = mock)
     node.remove_relation(rel)
     assert_equal(Set.new([]), node.relations)
   end
