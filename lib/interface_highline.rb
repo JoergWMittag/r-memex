@@ -14,7 +14,7 @@ class Controller
   def initialize
     @nc = NodeContainer.new
     @changed = false
-    @selected = Array.new
+    @selected = []
   end
 
   def new_container

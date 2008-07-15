@@ -76,12 +76,12 @@ class TestNodeContainer < Test::Unit::TestCase
     nc1 = NodeContainer.new
     node1 = Node.new('node1')
     nc1.add_node(node1)
-    assert_equal(Set.new([node1]), nc1.nodes)
+    assert_equal(Set[node1], nc1.nodes)
 
     nc2 = NodeContainer.new
     nc2.add_node('node1')
     assert_equal(nc1, nc2)
-    assert_equal(nc2.nodes.sort, Set.new([node1]).sort)
+    assert_equal(nc2.nodes.sort, Set[node1].sort)
   end
 
   def test_remove_node
@@ -98,17 +98,17 @@ class TestNodeContainer < Test::Unit::TestCase
     nc.add_node(node2)
     nc.add_relation(rel12, node1, node2)
 
-    node1.expects(:relations).once.returns(Set.new([rel12]))
+    node1.expects(:relations).once.returns(Set[rel12])
     rel12.expects(:source).once.returns(node1)
     rel12.expects(:dest).once.returns(node2)
     node1.expects(:remove_relation).once.with(rel12)
     node2.expects(:remove_relation).once.with(rel12)
     nc.remove_node(node1)
-    assert_equal(Set.new([]), nc.relations)
+    assert_equal(Set[], nc.relations)
   end
 
   def test_list_tags
-    assert_equal(Set.new(%w[Tag1 Tag2 Tag3]), init_tags.list_tags)
+    assert_equal(Set[*%w[Tag1 Tag2 Tag3]], init_tags.list_tags)
   end
 
   def test_frequency_single
@@ -120,20 +120,12 @@ class TestNodeContainer < Test::Unit::TestCase
 
   def test_frequencies
     nc = init_tags
-    tf = Hash.new
-    tf['Tag1'] = 2
-    tf['Tag2'] = 1
-    tf['Tag3'] = 1
-    assert_equal(tf, nc.absolute_frequencies)
+    assert_equal({ 'Tag1' => 2, 'Tag2' => 1, 'Tag3' => 1 }, nc.absolute_frequencies)
   end
 
   def test_relative_frequencies
     nc = init_tags
-    tf = Hash.new
-    tf['Tag1'] = 1.0
-    tf['Tag2'] = 0.5
-    tf['Tag3'] = 0.5
-    assert_equal(tf, nc.relative_frequencies)
+    assert_equal({ 'Tag1' => 1.0, 'Tag2' => 0.5, 'Tag3' => 0.5 }, nc.relative_frequencies)
   end
 
   def test_add_relation
@@ -145,9 +137,9 @@ class TestNodeContainer < Test::Unit::TestCase
     rel1 = Relation.new('rel_name1')
     rel2 = Relation.new('rel_name2')
     mc1.add_relation(rel1, node1, node1)
-    assert_equal(mc1.relations, Set.new([rel1]))
+    assert_equal(mc1.relations, Set[rel1])
     mc1.add_relation(rel2, node2, node2)
-    assert_equal(mc1.relations, Set.new([rel1, rel2]))
+    assert_equal(mc1.relations, Set[rel1, rel2])
   end
 
   def test_remove_relation
@@ -169,7 +161,7 @@ class TestNodeContainer < Test::Unit::TestCase
     node1.expects(:remove_relation).once.with(rel12)
     node2.expects(:remove_relation).once.with(rel12)
     nc.remove_relation(rel12)
-    assert_equal(Set.new([]), nc.relations)
+    assert_equal(Set[], nc.relations)
   end
 
   def test_node_by_tag
@@ -187,8 +179,8 @@ class TestNodeContainer < Test::Unit::TestCase
     node3.add_tag('tag_c')
     node4.add_tag('tag_d')
     node4.add_tag('tag_a')
-    assert_equal(Array.new([node2]), nc.nodes_by_tag('tag_b'))
-    assert_equal(Array.new([node1, node4]), nc.nodes_by_tag('tag_a'))
+    assert_equal([node2], nc.nodes_by_tag('tag_b'))
+    assert_equal([node1, node4], nc.nodes_by_tag('tag_a'))
   end
 
   def test_node_by_name
@@ -201,8 +193,8 @@ class TestNodeContainer < Test::Unit::TestCase
     nc.add_node(node2)
     nc.add_node(node3)
     nc.add_node(node4)
-    assert_equal(Array.new([node1, node2]), nc.nodes_by_name('a'))
-    assert_equal(Array.new([node3]), nc.nodes_by_name('c'))
+    assert_equal([node1, node2], nc.nodes_by_name('a'))
+    assert_equal([node3], nc.nodes_by_name('c'))
   end
 
   def test_merge

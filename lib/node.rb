@@ -12,8 +12,8 @@ class Node
     @name = name
     @location = nil
     @creation_time = Time.now
-    @tags = Set.new
-    @relations = Set.new
+    @tags = Set[]
+    @relations = Set[]
   end
 
   def <=>(obj)

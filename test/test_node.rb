@@ -60,7 +60,7 @@ class TestNode < Test::Unit::TestCase
     node.add_tag('Tag_Name')
     node.add_tag('Tag_Name') #it is a set?
     assert_equal(1, node.tags.length)
-    assert_equal(Set.new(['Tag_Name']), node.tags)
+    assert_equal(Set['Tag_Name'], node.tags)
   end
 
   def test_remove_tag
@@ -69,7 +69,7 @@ class TestNode < Test::Unit::TestCase
     node.add_tag('Tag_Name2')
     node.remove_tag('Tag_Name1')
     assert_equal(1, node.tags.length)
-    assert_equal(Set.new(['Tag_Name2']), node.tags)
+    assert_equal(Set['Tag_Name2'], node.tags)
   end
 
   def test_includes_tag
@@ -102,14 +102,14 @@ class TestNode < Test::Unit::TestCase
   def test_add_relation
     node = Node.new('Node')
     node.add_relation(rel = mock)
-    assert_equal(Set.new([rel]), node.relations)
+    assert_equal(Set[rel], node.relations)
   end
 
   def test_remove_relation
     node = Node.new('Node')
     node.add_relation(rel = mock)
     node.remove_relation(rel)
-    assert_equal(Set.new([]), node.relations)
+    assert_equal(Set[], node.relations)
   end
 
   def test_to_s

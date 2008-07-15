@@ -6,8 +6,8 @@ class NodeContainer
   attr_reader :nodes, :relations
 
   def initialize
-    @nodes = Set.new
-    @relations = Set.new
+    @nodes = Set[]
+    @relations = Set[]
   end
 
   def ==(obj)
