@@ -69,7 +69,7 @@ class NodeContainer
   end
 
   def absolute_frequency(tag)
-    return @nodes.select { |node| node.tags.include?(tag) }.size
+    return @nodes.count { |node| node.tags.include?(tag) }
   end
 
   def absolute_frequencies
